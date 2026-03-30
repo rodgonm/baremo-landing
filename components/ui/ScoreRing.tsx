@@ -48,7 +48,7 @@ export function ScoreRing({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="#00A87A"
+          stroke="#00B386"
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
@@ -57,7 +57,10 @@ export function ScoreRing({
         />
       </svg>
       <div className="absolute flex flex-col items-center">
-        <span className="font-display font-bold" style={{ fontSize: size * 0.26 }}>
+        <span
+          className="font-display font-bold"
+          style={{ fontSize: size * 0.26 }}
+        >
           {animatedScore}
         </span>
       </div>

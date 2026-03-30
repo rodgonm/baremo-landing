@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { Outfit, DM_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "./globals.css";
 
-const outfit = Outfit({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-outfit",
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-display",
 });
 
-const dmSans = DM_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  variable: "--font-dm-sans",
+  weight: ["400", "500"],
+  variable: "--font-body",
 });
 
 export const metadata: Metadata = {
@@ -35,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${outfit.variable} ${dmSans.variable}`}>
+    <html lang="es" className={`${jakarta.variable} ${inter.variable}`}>
       <body className="min-h-screen antialiased">{children}</body>
     </html>
   );

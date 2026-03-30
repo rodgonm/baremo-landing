@@ -1,31 +1,31 @@
 @import "tailwindcss";
 
 @theme inline {
+  /* Backgrounds */
   --color-bg: #ffffff;
   --color-bg-soft: #FAFAFA;
-  --color-bg-muted: #F3F3F2;
+  --color-bg-muted: #F2F2F0;
+  --color-bg-dark: #0C0C0C;
+  --color-bg-dark-soft: #161616;
 
-  --color-bg-dark: #0A0A0A;
-  --color-bg-teal: #E8FAF5;
-  --color-bg-blue: #EEF2FF;
-  --color-bg-warm: #FFF7ED;
-  --color-bg-purple: #F5F3FF;
+  /* Baremo teal — the single brand color */
+  --color-brand: #00B386;
+  --color-brand-soft: #E8F8F3;
+  --color-brand-muted: #D0F1E8;
 
-  --color-text: #000000;
-  --color-text-secondary: #5C5C5C;
+  /* Text */
+  --color-text: #0C0C0C;
+  --color-text-secondary: #555555;
   --color-text-muted: #999999;
   --color-text-faint: #D4D4D4;
 
-  --color-border: #E8E8E8;
-  --color-border-hover: #D0D0D0;
+  /* Borders */
+  --color-border: #EAEAEA;
+  --color-border-hover: #D4D4D4;
 
-  --color-accent: #0241E4;
-  --color-teal: #00A87A;
-  --color-orange: #F97316;
-  --color-purple: #7C3AED;
-
-  --font-display: 'Outfit', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
+  /* Typography — Plus Jakarta Sans (display) + Inter (body) */
+  --font-display: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
 }
 
 html { scroll-behavior: smooth; }
@@ -36,6 +36,7 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 }
 
 /* Link underline — oneam scaleX */
@@ -48,16 +49,9 @@ body {
 }
 .link-hover:hover::after { transform: scaleX(1); transform-origin: left; }
 
-/* Flowing gradient text */
-@keyframes gradient-flow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+/* Gradient text — teal only, no cycling */
 .text-gradient {
-  background: linear-gradient(135deg, #00A87A, #06b6d4, #00A87A);
-  background-size: 200% 200%;
-  animation: gradient-flow 6s linear infinite;
+  background: linear-gradient(135deg, #00B386, #00D4A0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -70,29 +64,14 @@ body {
 }
 .placeholder-media::after {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, transparent 40%, rgba(0,0,0,0.02) 50%, transparent 60%);
-  background-size: 200% 200%;
-  animation: shimmer 3s ease-in-out infinite;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s ease-in-out infinite;
 }
 @keyframes shimmer {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
-
-/* Floating animation */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-.animate-float { animation: float 4s ease-in-out infinite; }
-.animate-float-delayed { animation: float 4s ease-in-out 2s infinite; }
-
-/* Rotating shape */
-@keyframes slow-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-.animate-slow-spin { animation: slow-spin 30s linear infinite; }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
@@ -103,4 +82,4 @@ body {
   }
 }
 
-::selection { background: #E0F2FE; color: var(--color-text); }
+::selection { background: var(--color-brand-soft); color: var(--color-text); }

@@ -30,12 +30,12 @@ export function Nav() {
           <Logo size="sm" />
         </a>
 
-        <div className="hidden items-center gap-12 md:flex">
+        <div className="hidden items-center gap-10 md:flex">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="link-hover text-[0.875rem] text-text-secondary transition-colors duration-300 hover:text-text"
+              className="link-hover text-[0.8125rem] text-text-secondary transition-colors duration-300 hover:text-text"
             >
               {link.label}
             </a>
@@ -51,7 +51,7 @@ export function Nav() {
           </a>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="cursor-pointer text-[0.875rem] text-text md:hidden"
+            className="cursor-pointer text-[0.8125rem] text-text md:hidden"
             aria-label="Menú"
           >
             {mobileOpen ? "Cerrar" : "Menú"}
@@ -59,7 +59,6 @@ export function Nav() {
         </div>
       </div>
 
-      {/* Mobile menu — full screen overlay */}
       <div
         className={`fixed inset-0 top-[72px] bg-bg transition-opacity duration-300 md:hidden ${
           mobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -71,7 +70,7 @@ export function Nav() {
               key={link.href}
               href={link.href}
               onClick={() => setMobileOpen(false)}
-              className="border-b border-border py-5 font-display text-[1.75rem] font-semibold text-text transition-colors hover:text-text-secondary"
+              className="border-b border-border py-5 font-display text-[1.75rem] font-semibold text-text"
             >
               {link.label}
             </a>

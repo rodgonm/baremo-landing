@@ -19,7 +19,7 @@ export function TrustSignal() {
             {categories.map((cat) => (
               <span
                 key={cat}
-                className="cursor-default rounded-full border border-border px-5 py-2 text-[0.8125rem] text-text-muted transition-colors duration-300 hover:border-border-hover hover:text-text-secondary"
+                className="cursor-default rounded-full border border-border px-5 py-2 text-[0.8125rem] text-text-muted transition-colors duration-300 hover:border-brand hover:text-brand"
               >
                 {cat}
               </span>
