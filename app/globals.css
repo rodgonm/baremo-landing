@@ -1,26 +1,105 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg-deep: #060911;
+  --color-bg-card: #0d1117;
+  --color-bg-card-hover: #131a24;
+  --color-bg-surface: #161d2a;
+
+  --color-brand-primary: #00d4a0;
+  --color-brand-primary-dim: rgba(0, 212, 160, 0.12);
+  --color-brand-primary-glow: rgba(0, 212, 160, 0.25);
+  --color-brand-accent: #ff6b35;
+  --color-brand-purple: #a855f7;
+  --color-brand-blue: #3b82f6;
+  --color-brand-cyan: #06b6d4;
+  --color-brand-amber: #f59e0b;
+
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+
+  --color-border-default: rgba(148, 163, 184, 0.08);
+  --color-border-hover: rgba(148, 163, 184, 0.15);
+
+  --font-outfit: 'Outfit', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --gradient-hero: radial-gradient(ellipse 600px 400px at 30% 40%, rgba(0, 212, 160, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 350px at 70% 60%, rgba(168, 85, 247, 0.04) 0%, transparent 70%);
+  --gradient-text: linear-gradient(135deg, #00d4a0, #06b6d4);
+  --gradient-section: linear-gradient(253deg, #060911 4%, #0d1a2a 99%);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg-deep);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Grid pattern overlay for hero */
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 70% 50% at 50% 50%, black 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 50%, black 30%, transparent 70%);
+}
+
+/* Gradient text utility */
+.text-gradient {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 3s ease-in-out 1.5s infinite;
+}
+
+/* Rotating glow orb */
+@keyframes rotate-glow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-rotate-glow {
+  animation: rotate-glow 20s linear infinite;
+}
+
+/* Score ring animation */
+@keyframes score-fill {
+  from { stroke-dashoffset: 364; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-text-muted);
+  border-radius: 3px;
 }

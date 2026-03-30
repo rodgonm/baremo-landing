@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baremo Logo — Final (em-scaled)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Outfit', sans-serif; padding: 40px; background: #f1f5f9; }
+.grid { display: flex; flex-direction: column; gap: 32px; max-width: 900px; margin: 0 auto; }
+h2 { font-size: 14px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+.card { border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; background: white; }
+.row { display: flex; }
+.dk { flex: 1; background: #060911; display: flex; align-items: center; justify-content: center; }
+.lt { flex: 1; background: #f8fafc; display: flex; align-items: center; justify-content: center; }
+.pad-lg { padding: 80px 60px; }
+.pad-md { padding: 48px 40px; }
+.pad-sm { padding: 32px 24px; }
+
+/* ═══ LOGO COMPONENT — all values in em, scales with font-size ═══ */
+.logo {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.dk .logo { color: #f1f5f9; }
+.lt .logo { color: #0f172a; }
+
+.logo .o {
+  font-weight: 500;
+  font-size: 105%;
+  position: relative;
+  display: inline-block;
+}
+.dk .logo .o { color: #00d4a0; }
+.lt .logo .o { color: #0F6E56; }
+
+.logo .o .line {
+  position: absolute;
+  width: 0.042em;
+  height: 0.136em;
+  border-radius: 2px;
+  left: calc(50% + 0.017em);
+  transform: translateX(-50%);
+}
+.logo .o .line.top {
+  top: 0.186em;
+}
+.logo .o .line.bot {
+  bottom: -0.051em;
+}
+.logo .o .dot {
+  position: absolute;
+  width: 0.085em;
+  height: 0.085em;
+  border-radius: 50%;
+  left: calc(50% + 0.017em);
+  top: 0.627em;
+  transform: translate(-50%, -50%);
+}
+.dk .logo .o .line,
+.dk .logo .o .dot { background: #00d4a0; }
+.lt .logo .o .line,
+.lt .logo .o .dot { background: #0F6E56; }
+</style>
+</head>
+<body>
+<div class="grid">
+
+  <h2>Large — 56px (hero / splash)</h2>
+  <div class="card"><div class="row">
+    <div class="dk pad-lg"><span class="logo" style="font-size:56px">barem<span class="o">o<span class="line top"></span><span class="line bot"></span><span class="dot"></span></span></span></div>
+    <div class="lt pad-lg"><span class="logo" style="font-size:56px">barem<span class="o">o<span class="line top"></span><span class="line bot"></span><span class="dot"></span></span></span></div>
+  </div></div>
+
+  <h2>Medium — 32px (navigation)</h2>
+  <div class="card"><div class="row">
+    <div class="dk pad-md"><span class="logo" style="font-size:32px">barem<span class="o">o<span class="line top"></span><span class="line bot"></span><span class="dot"></span></span></span></div>
+    <div class="lt pad-md"><span class="logo" style="font-size:32px">barem<span class="o">o<span class="line top"></span><span class="line bot"></span><span class="dot"></span></span></span></div>
+  </div></div>
+
+  <h2>Small — 20px (footer / badge)</h2>
+  <div class="card"><div class="row">
+    <div class="dk pad-sm"><span class="logo" style="font-size:20px">barem<span class="o">o<span class="line top"></span><span class="line bot"></span><span class="dot"></span></span></span></div>
+    <div class="lt pad-sm"><span class="logo" style="font-size:20px">barem<span class="o">o<span class="line top"></span><span class="line bot"></span><span class="dot"></span></span></span></div>
+  </div></div>
+
+  <h2>Extra large — 80px (marketing)</h2>
+  <div class="card"><div class="row">
+    <div class="dk pad-lg"><span class="logo" style="font-size:80px">barem<span class="o">o<span class="line top"></span><span class="line bot"></span><span class="dot"></span></span></span></div>
+    <div class="lt pad-lg"><span class="logo" style="font-size:80px">barem<span class="o">o<span class="line top"></span><span class="line bot"></span><span class="dot"></span></span></span></div>
+  </div></div>
+
+</div>
+</body>
+</html>
