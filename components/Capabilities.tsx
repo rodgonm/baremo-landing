@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
 import { ScrollReveal } from "./ui/ScrollReveal";
 
 const capabilities = [
@@ -11,6 +10,57 @@ const capabilities = [
   { title: "Análisis inteligente", description: "Detecta patrones, predice caídas de cumplimiento y sugiere acciones correctivas." },
   { title: "Una plataforma, múltiples marcas", description: "Cada cliente tiene su espacio aislado. Sus criterios, sus usuarios, sus datos." },
 ];
+
+function AccordionItem({
+  cap,
+  isOpen,
+  onToggle,
+}: {
+  cap: { title: string; description: string };
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      setHeight(isOpen ? contentRef.current.scrollHeight : 0);
+    }
+  }, [isOpen]);
+
+  return (
+    <div className="border-t border-border last:border-b">
+      <button
+        onClick={onToggle}
+        className="flex w-full cursor-pointer items-center justify-between py-6 text-left"
+      >
+        <span className={`font-display text-[1rem] font-semibold transition-colors duration-300 ${
+          isOpen ? "text-text" : "text-text-muted"
+        }`}>
+          {cap.title}
+        </span>
+        <svg
+          className={`h-4 w-4 shrink-0 text-text-muted transition-transform duration-300 ${
+            isOpen ? "rotate-45" : ""
+          }`}
+          fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+        </svg>
+      </button>
+      <div
+        ref={contentRef}
+        className="overflow-hidden transition-[height] duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
+        style={{ height }}
+      >
+        <p className="max-w-lg pb-6 text-[0.875rem] leading-[1.75] text-text-secondary">
+          {cap.description}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export function Capabilities() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -34,47 +84,18 @@ export function Capabilities() {
             </div>
           </ScrollReveal>
 
-          <div>
-            {capabilities.map((cap, i) => (
-              <ScrollReveal key={cap.title} delay={i * 0.03}>
-                <div className={`border-t border-border ${i === capabilities.length - 1 ? "border-b" : ""}`}>
-                  <button
-                    onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                    className="flex w-full cursor-pointer items-center justify-between py-6 text-left"
-                  >
-                    <span className={`font-display text-[1rem] font-semibold transition-colors duration-300 ${
-                      openIndex === i ? "text-text" : "text-text-muted"
-                    }`}>
-                      {cap.title}
-                    </span>
-                    <svg
-                      className={`h-4 w-4 shrink-0 text-text-muted transition-transform duration-300 ${
-                        openIndex === i ? "rotate-45" : ""
-                      }`}
-                      fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                    </svg>
-                  </button>
-                  <AnimatePresence>
-                    {openIndex === i && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-                        className="overflow-hidden"
-                      >
-                        <p className="max-w-lg pb-6 text-[0.875rem] leading-[1.75] text-text-secondary">
-                          {cap.description}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
+          <ScrollReveal delay={0.1}>
+            <div>
+              {capabilities.map((cap, i) => (
+                <AccordionItem
+                  key={cap.title}
+                  cap={cap}
+                  isOpen={openIndex === i}
+                  onToggle={() => setOpenIndex(openIndex === i ? null : i)}
+                />
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

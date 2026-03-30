@@ -1,26 +1,62 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap-setup";
 import { DashboardMock } from "./ui/DashboardMock";
 
 const callouts = [
-  { label: "Mapa en tiempo real", position: "top-[8%] left-[2%]" },
-  { label: "Tendencias semana a semana", position: "bottom-[28%] left-[2%]" },
-  { label: "Rankings por territorio", position: "top-[8%] right-[2%]" },
-  { label: "Reportes con AI", position: "bottom-[5%] right-[2%]" },
+  { label: "Mapa en tiempo real", className: "callout-0" },
+  { label: "Tendencias semana a semana", className: "callout-1" },
+  { label: "Rankings por territorio", className: "callout-2" },
+  { label: "Reportes con AI", className: "callout-3" },
 ];
 
 export function ProductShowcase() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (!sectionRef.current) return;
+
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) {
+      gsap.set(".callout-label", { opacity: 1, y: 0 });
+      return;
+    }
+
+    // Pin the dashboard section
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top top",
+        end: "+=150%",
+        pin: true,
+        scrub: 0.8,
+      },
+    });
+
+    // Dashboard entrance
+    tl.fromTo(
+      ".dashboard-mock",
+      { opacity: 0.5, y: 30 },
+      { opacity: 1, y: 0, duration: 0.3 },
+      0
+    );
+
+    // Stagger callout labels
+    callouts.forEach((_, i) => {
+      tl.fromTo(
+        `.callout-${i}`,
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.2 },
+        0.15 + i * 0.15
+      );
+    });
+
+  }, { scope: sectionRef });
 
   return (
-    <section ref={containerRef} className="relative min-h-[200vh]">
-      <div className="sticky top-0 flex min-h-screen items-center overflow-hidden bg-brand-soft py-16">
+    <section ref={sectionRef} className="bg-brand-soft">
+      <div className="flex min-h-screen items-center py-16">
         <div className="mx-auto w-full max-w-[1400px] px-8 lg:px-12">
           <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <h2 className="max-w-lg font-display text-[clamp(2rem,4vw,3rem)] font-bold leading-[1.08] tracking-[-0.03em]">
@@ -33,33 +69,34 @@ export function ProductShowcase() {
           </div>
 
           <div className="relative">
-            <DashboardMock />
-            {callouts.map((c, i) => {
-              const start = 0.12 + i * 0.16;
-              return (
-                <CalloutLabel key={c.label} label={c.label} position={c.position}
-                  progress={scrollYProgress} start={start} />
-              );
-            })}
+            <div className="dashboard-mock">
+              <DashboardMock />
+            </div>
+
+            {/* Callout labels — positioned over dashboard */}
+            <div className="callout-label callout-0 absolute left-[2%] top-[8%] hidden lg:block" style={{ opacity: 0 }}>
+              <span className="rounded-full bg-white/90 px-3 py-1.5 text-[0.6875rem] font-medium text-brand shadow-sm backdrop-blur-sm ring-1 ring-black/5">
+                {callouts[0].label}
+              </span>
+            </div>
+            <div className="callout-label callout-1 absolute bottom-[28%] left-[2%] hidden lg:block" style={{ opacity: 0 }}>
+              <span className="rounded-full bg-white/90 px-3 py-1.5 text-[0.6875rem] font-medium text-brand shadow-sm backdrop-blur-sm ring-1 ring-black/5">
+                {callouts[1].label}
+              </span>
+            </div>
+            <div className="callout-label callout-2 absolute right-[2%] top-[8%] hidden lg:block" style={{ opacity: 0 }}>
+              <span className="rounded-full bg-white/90 px-3 py-1.5 text-[0.6875rem] font-medium text-brand shadow-sm backdrop-blur-sm ring-1 ring-black/5">
+                {callouts[2].label}
+              </span>
+            </div>
+            <div className="callout-label callout-3 absolute bottom-[5%] right-[2%] hidden lg:block" style={{ opacity: 0 }}>
+              <span className="rounded-full bg-white/90 px-3 py-1.5 text-[0.6875rem] font-medium text-brand shadow-sm backdrop-blur-sm ring-1 ring-black/5">
+                {callouts[3].label}
+              </span>
+            </div>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function CalloutLabel({ label, position, progress, start }: {
-  label: string; position: string;
-  progress: ReturnType<typeof useScroll>["scrollYProgress"]; start: number;
-}) {
-  const opacity = useTransform(progress, [start, start + 0.06], [0, 1]);
-  const y = useTransform(progress, [start, start + 0.06], [6, 0]);
-
-  return (
-    <motion.div style={{ opacity, y }} className={`absolute ${position} hidden lg:block`}>
-      <span className="rounded-full bg-white/90 px-3 py-1.5 text-[0.6875rem] font-medium text-brand shadow-sm backdrop-blur-sm ring-1 ring-black/5">
-        {label}
-      </span>
-    </motion.div>
   );
 }
