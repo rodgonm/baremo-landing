@@ -22,9 +22,7 @@ export function Nav() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-bg/90 backdrop-blur-2xl"
-          : "bg-transparent"
+        scrolled ? "bg-bg/90 backdrop-blur-2xl" : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex h-[72px] max-w-[1400px] items-center justify-between px-8 lg:px-12">
@@ -47,7 +45,7 @@ export function Nav() {
         <div className="flex items-center gap-6">
           <a
             href="#contacto"
-            className="cursor-pointer rounded-[6px] bg-accent px-5 py-2.5 text-[0.8125rem] font-medium text-white transition-all duration-300 hover:opacity-85"
+            className="cursor-pointer rounded-full bg-text px-5 py-2.5 text-[0.8125rem] font-medium text-bg transition-all duration-300 hover:bg-text/85"
           >
             Solicitar Demo
           </a>

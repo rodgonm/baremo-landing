@@ -1,90 +1,103 @@
 "use client";
 
 import { ScrollReveal } from "./ui/ScrollReveal";
-import { ScoreRing } from "./ui/ScoreRing";
 
-const otherModules = [
-  { name: "Distribución", description: "Cobertura, frecuencia de visita y rutas optimizadas." },
-  { name: "Precios", description: "Captura de precios en campo con análisis competitivo." },
-  { name: "Inventario", description: "Stock en punto de venta y alertas de quiebre." },
-  { name: "Promociones", description: "Verificación de ejecución promocional con evidencia." },
-  { name: "IoT y Sensores", description: "Temperatura, apertura de puertas y telemetría en frío." },
+const modules = [
+  {
+    title: "Ejecución en PDV",
+    description: "Auditorías con puntaje automático. Tu vendedor sabe qué mejorar antes de irse de la tienda.",
+    badge: "Disponible",
+    bg: "bg-bg-teal",
+    span: "lg:col-span-2 lg:row-span-2",
+    placeholder: "Captura — app móvil mostrando auditoría en proceso",
+    large: true,
+  },
+  {
+    title: "Dashboard en tiempo real",
+    description: "Mapas, rankings, tendencias. Todo tu campo en una pantalla.",
+    bg: "bg-bg-blue",
+    span: "lg:col-span-1",
+    placeholder: "Captura — dashboard ejecutivo",
+  },
+  {
+    title: "Reportes inteligentes",
+    description: "Análisis con AI que detecta patrones y sugiere acciones.",
+    bg: "bg-bg-purple",
+    span: "lg:col-span-1",
+    placeholder: "Captura — reporte generado",
+  },
+  {
+    title: "Distribución",
+    description: "Cobertura, frecuencia de visita y rutas optimizadas.",
+    bg: "bg-bg-warm",
+    span: "lg:col-span-1",
+    badge: "Próximamente",
+  },
+  {
+    title: "Precios & Inventario",
+    description: "Captura de precios competitivos y alertas de quiebre de stock.",
+    bg: "bg-bg-muted",
+    span: "lg:col-span-1",
+    badge: "Próximamente",
+  },
+  {
+    title: "IoT y Sensores",
+    description: "Temperatura y telemetría de equipos en frío, en tiempo real.",
+    bg: "bg-bg-muted",
+    span: "lg:col-span-1",
+    badge: "Próximamente",
+  },
 ];
 
 export function ModuleCards() {
   return (
-    <section id="plataforma" className="py-36 lg:py-48">
+    <section id="plataforma" className="py-32 lg:py-40">
       <div className="mx-auto max-w-[1400px] px-8 lg:px-12">
-        <div className="grid gap-16 lg:grid-cols-[1fr_1fr] lg:gap-20">
-          {/* Left */}
-          <ScrollReveal>
-            <div>
-              <p className="text-[0.75rem] font-medium uppercase tracking-[0.2em] text-text-muted">
-                La plataforma
-              </p>
-              <h2 className="mt-5 font-display text-[clamp(2rem,4vw,3.25rem)] font-bold leading-[1.05] tracking-[-0.03em]">
-                Módulos que se adaptan a tu operación.
-              </h2>
-              <p className="mt-5 text-[1.0625rem] leading-[1.7] text-text-secondary">
-                Empieza midiendo la ejecución en punto de venta. Agrega módulos
-                conforme crece tu operación — sin cambiar de plataforma.
-              </p>
-
-              {/* Featured module */}
-              <div className="mt-12 rounded-[8px] border border-border p-8">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <span className="text-[0.6875rem] font-medium uppercase tracking-[0.15em] text-accent">
-                      Disponible ahora
-                    </span>
-                    <h3 className="mt-2 font-display text-[1.5rem] font-semibold">
-                      Ejecución en PDV
-                    </h3>
-                    <p className="mt-2 max-w-sm text-[0.9375rem] leading-[1.7] text-text-secondary">
-                      Auditorías digitales con puntaje automático por zona.
-                      Fotos, checklists y cumplimiento en tiempo real.
-                    </p>
-                  </div>
-                  <div className="hidden sm:block">
-                    <ScoreRing score={92} size={100} strokeWidth={5} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ScrollReveal>
-
-          {/* Right */}
-          <ScrollReveal delay={0.15}>
-            <div className="lg:pt-24">
-              <p className="mb-6 text-[0.75rem] font-medium uppercase tracking-[0.2em] text-text-muted">
-                Próximamente
-              </p>
-              <div className="divide-y divide-border">
-                {otherModules.map((m) => (
-                  <div key={m.name} className="group cursor-default py-5">
-                    <h3 className="font-display text-[1.125rem] font-semibold text-text transition-colors duration-300 group-hover:text-accent">
-                      {m.name}
-                    </h3>
-                    <p className="mt-1 text-[0.875rem] leading-[1.6] text-text-muted">
-                      {m.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
-        </div>
-
-        {/* Platform screenshot placeholder */}
-        <ScrollReveal delay={0.1}>
-          <div className="mt-24 placeholder-media aspect-[21/9] w-full rounded-[12px]">
-            <div className="flex h-full items-center justify-center">
-              <span className="text-[0.6875rem] uppercase tracking-[0.15em] text-text-muted">
-                Captura de pantalla — plataforma completa
-              </span>
-            </div>
-          </div>
+        <ScrollReveal>
+          <p className="text-[0.75rem] font-medium uppercase tracking-[0.2em] text-text-muted">
+            La plataforma
+          </p>
+          <h2 className="mt-5 max-w-2xl font-display text-[clamp(2rem,4vw,3.25rem)] font-bold leading-[1.05] tracking-[-0.03em]">
+            Módulos que se adaptan a tu operación.
+          </h2>
         </ScrollReveal>
+
+        {/* Bento grid — Notion-inspired mixed sizes */}
+        <div className="mt-14 grid gap-4 lg:grid-cols-3 lg:grid-rows-[auto_auto_auto]">
+          {modules.map((m, i) => (
+            <ScrollReveal key={m.title} delay={i * 0.04}>
+              <div
+                className={`group cursor-default overflow-hidden rounded-[16px] ${m.bg} ${m.span} transition-all duration-300 hover:shadow-[0_4px_24px_rgba(0,0,0,0.06)] ${m.large ? "min-h-[400px]" : "min-h-[200px]"} flex flex-col justify-between p-7`}
+              >
+                <div>
+                  {m.badge && (
+                    <span className={`mb-3 inline-block text-[0.6875rem] font-medium uppercase tracking-[0.1em] ${
+                      m.badge === "Disponible" ? "text-teal" : "text-text-muted"
+                    }`}>
+                      {m.badge}
+                    </span>
+                  )}
+                  <h3 className="font-display text-[1.25rem] font-semibold text-text">
+                    {m.title}
+                  </h3>
+                  <p className="mt-2 max-w-sm text-[0.9375rem] leading-[1.6] text-text-secondary">
+                    {m.description}
+                  </p>
+                </div>
+
+                {m.placeholder && (
+                  <div className="mt-6 placeholder-media aspect-[16/9] rounded-[10px]">
+                    <div className="flex h-full items-center justify-center px-4">
+                      <span className="text-center text-[0.625rem] uppercase tracking-[0.1em] text-text-muted">
+                        {m.placeholder}
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
       </div>
     </section>
   );

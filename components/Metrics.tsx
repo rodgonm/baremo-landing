@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { ScrollReveal } from "./ui/ScrollReveal";
 
 const metrics = [
-  { value: 5, suffix: " min", label: "Auditoría completa", sublabel: "Promedio por tienda" },
-  { value: 100, suffix: "%", label: "Digital. Cero papel.", sublabel: "Desde el día uno" },
-  { value: 0, suffix: "", label: "Tiempo real", sublabel: "Datos al instante", display: "Real-time" },
+  { value: 5, suffix: "min", label: "Auditoría completa", sublabel: "Promedio por tienda", bg: "bg-bg-teal" },
+  { value: 100, suffix: "%", label: "Digital desde el día uno", sublabel: "Cero papel. Cero Excel.", bg: "bg-bg-blue" },
+  { value: 0, suffix: "", label: "Datos al instante", sublabel: "Sin esperar el reporte del viernes", bg: "bg-bg-warm", display: "Real-time" },
 ];
 
 function Counter({ value, suffix, display }: { value: number; suffix: string; display?: string }) {
@@ -38,18 +38,19 @@ function Counter({ value, suffix, display }: { value: number; suffix: string; di
     return () => observer.disconnect();
   }, [value, display]);
 
-  return <span ref={ref}>{display || `${count}${suffix}`}</span>;
+  if (display) return <span ref={ref}>{display}</span>;
+  return <span ref={ref}>{count}<span className="text-[0.6em] font-semibold">{suffix}</span></span>;
 }
 
 export function Metrics() {
   return (
-    <section className="py-32 lg:py-40">
+    <section className="py-28 lg:py-36">
       <div className="mx-auto max-w-[1400px] px-8 lg:px-12">
-        <div className="grid gap-12 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-3">
           {metrics.map((m, i) => (
             <ScrollReveal key={m.label} delay={i * 0.08}>
-              <div className={`${i > 0 ? "md:border-l md:border-border md:pl-12" : ""}`}>
-                <p className="font-display text-[clamp(3.5rem,7vw,5.5rem)] font-extrabold leading-[0.9] tracking-[-0.04em]">
+              <div className={`rounded-[16px] ${m.bg} p-8 lg:p-10`}>
+                <p className="font-display text-[clamp(3rem,6vw,4.5rem)] font-extrabold leading-[0.9] tracking-[-0.04em]">
                   <Counter value={m.value} suffix={m.suffix} display={m.display} />
                 </p>
                 <p className="mt-4 text-[0.9375rem] font-medium text-text">{m.label}</p>

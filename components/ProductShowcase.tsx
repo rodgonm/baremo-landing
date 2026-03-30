@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { DashboardMock } from "./ui/DashboardMock";
 
 const callouts = [
@@ -20,10 +20,9 @@ export function ProductShowcase() {
 
   return (
     <section ref={containerRef} className="relative min-h-[200vh]">
-      <div className="sticky top-0 flex min-h-screen items-center overflow-hidden bg-bg-muted py-16">
+      <div className="sticky top-0 flex min-h-screen items-center overflow-hidden bg-bg-teal py-16">
         <div className="mx-auto w-full max-w-[1400px] px-8 lg:px-12">
-          {/* Header */}
-          <div className="mb-12 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <h2 className="max-w-lg font-display text-[clamp(2rem,4vw,3.25rem)] font-bold leading-[1.05] tracking-[-0.03em]">
               Todo tu campo, en una pantalla.
             </h2>
@@ -33,7 +32,6 @@ export function ProductShowcase() {
             </p>
           </div>
 
-          {/* Dashboard with scroll-triggered callouts */}
           <div className="relative">
             <DashboardMock />
 
@@ -75,7 +73,7 @@ function CalloutLabel({
       style={{ opacity, y }}
       className={`absolute ${position} hidden lg:block`}
     >
-      <span className="rounded-[6px] bg-bg/90 px-3 py-1.5 text-[0.6875rem] font-medium text-accent shadow-sm backdrop-blur-sm ring-1 ring-border">
+      <span className="rounded-full bg-white/90 px-3 py-1.5 text-[0.6875rem] font-medium text-teal shadow-sm backdrop-blur-sm ring-1 ring-black/5">
         {label}
       </span>
     </motion.div>
