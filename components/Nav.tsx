@@ -14,77 +14,72 @@ export function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setScrolled(window.scrollY > 80);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-bg/80 backdrop-blur-xl border-b border-border"
+          ? "bg-bg/90 backdrop-blur-2xl"
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-6 lg:px-8">
+      <div className="mx-auto flex h-[72px] max-w-[1400px] items-center justify-between px-8 lg:px-12">
         <a href="#" className="shrink-0">
           <Logo size="sm" />
         </a>
 
-        <div className="hidden items-center gap-10 md:flex">
+        <div className="hidden items-center gap-12 md:flex">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="relative text-[0.875rem] text-text-secondary transition-colors duration-200 hover:text-text"
+              className="link-hover text-[0.875rem] text-text-secondary transition-colors duration-300 hover:text-text"
             >
               {link.label}
             </a>
           ))}
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6">
           <a
             href="#contacto"
-            className="cursor-pointer rounded-md bg-text px-5 py-2 text-[0.875rem] font-medium text-bg transition-opacity duration-200 hover:opacity-80"
+            className="cursor-pointer rounded-[6px] bg-accent px-5 py-2.5 text-[0.8125rem] font-medium text-white transition-all duration-300 hover:opacity-85"
           >
             Solicitar Demo
           </a>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="flex cursor-pointer flex-col gap-[5px] md:hidden"
+            className="cursor-pointer text-[0.875rem] text-text md:hidden"
             aria-label="Menú"
           >
-            <span
-              className={`block h-[1.5px] w-5 bg-text transition-all duration-200 ${mobileOpen ? "translate-y-[7px] rotate-45" : ""}`}
-            />
-            <span
-              className={`block h-[1.5px] w-5 bg-text transition-all duration-200 ${mobileOpen ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`block h-[1.5px] w-5 bg-text transition-all duration-200 ${mobileOpen ? "-translate-y-[7px] -rotate-45" : ""}`}
-            />
+            {mobileOpen ? "Cerrar" : "Menú"}
           </button>
         </div>
       </div>
 
-      {mobileOpen && (
-        <div className="border-b border-border bg-bg/95 backdrop-blur-xl md:hidden">
-          <div className="flex flex-col gap-6 px-6 py-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="text-lg text-text-secondary transition-colors hover:text-text"
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
+      {/* Mobile menu — full screen overlay */}
+      <div
+        className={`fixed inset-0 top-[72px] bg-bg transition-opacity duration-300 md:hidden ${
+          mobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="flex flex-col gap-1 px-8 pt-12">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setMobileOpen(false)}
+              className="border-b border-border py-5 font-display text-[1.75rem] font-semibold text-text transition-colors hover:text-text-secondary"
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
-      )}
+      </div>
     </nav>
   );
 }

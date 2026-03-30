@@ -13,9 +13,9 @@ export function FloatingElements() {
 
   return (
     <>
-      {/* Floating CTA — minimal black pill */}
+      {/* Floating CTA — accent blue pill */}
       <div
-        className={`fixed bottom-6 left-1/2 z-50 -translate-x-1/2 transition-all duration-400 ${
+        className={`fixed bottom-8 left-1/2 z-50 -translate-x-1/2 transition-all duration-500 ${
           showCTA
             ? "translate-y-0 opacity-100"
             : "translate-y-3 opacity-0 pointer-events-none"
@@ -23,18 +23,18 @@ export function FloatingElements() {
       >
         <a
           href="#contacto"
-          className="inline-flex cursor-pointer items-center rounded-full bg-text px-6 py-2.5 text-[0.8125rem] font-medium text-bg shadow-sm transition-opacity duration-200 hover:opacity-80"
+          className="inline-flex cursor-pointer items-center rounded-full bg-accent px-6 py-2.5 text-[0.8125rem] font-medium text-white shadow-[0_2px_12px_rgba(2,65,228,0.25)] transition-all duration-300 hover:opacity-90"
         >
           Solicitar Demo
         </a>
       </div>
 
-      {/* WhatsApp — subtle */}
+      {/* WhatsApp */}
       <a
         href="https://wa.me/50212345678?text=Hola%2C%20me%20interesa%20Baremo"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-border bg-bg shadow-sm transition-all duration-200 hover:shadow-md"
+        className="fixed bottom-8 right-8 z-50 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-bg shadow-[0_2px_12px_rgba(0,0,0,0.08)] transition-all duration-300 hover:shadow-[0_4px_20px_rgba(0,0,0,0.12)]"
         aria-label="WhatsApp"
       >
         <svg viewBox="0 0 24 24" className="h-5 w-5 fill-[#25D366]">

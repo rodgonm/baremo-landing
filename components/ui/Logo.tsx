@@ -6,12 +6,12 @@ export function Logo({
   variant?: "dark" | "light";
 }) {
   const sizes = {
-    sm: "text-[20px]",
-    md: "text-[32px]",
+    sm: "text-[22px]",
+    md: "text-[28px]",
     lg: "text-[56px]",
     xl: "text-[80px]",
   };
-  const textColor = variant === "light" ? "text-[#0A0A0A]" : "text-[#f1f5f9]";
+  const textColor = variant === "light" ? "text-[#000000]" : "text-[#f1f5f9]";
   const oColor = variant === "light" ? "#00A87A" : "#00d4a0";
 
   return (

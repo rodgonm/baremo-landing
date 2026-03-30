@@ -1,88 +1,79 @@
 "use client";
 
 import { ScrollReveal } from "./ui/ScrollReveal";
+import { ScoreRing } from "./ui/ScoreRing";
 
-const modules = [
-  {
-    name: "Control de Calidad",
-    description:
-      "Auditorías digitales con puntaje automático por zona. Fotos, checklists y cumplimiento en tiempo real.",
-    status: "Disponible",
-  },
-  {
-    name: "Distribución",
-    description:
-      "Cobertura, frecuencia de visita y rutas optimizadas para cada territorio.",
-    status: "Próximamente",
-  },
-  {
-    name: "Precios",
-    description:
-      "Captura de precios en campo con análisis competitivo automatizado.",
-    status: "Próximamente",
-  },
-  {
-    name: "Inventario",
-    description:
-      "Stock en punto de venta con alertas inteligentes de quiebre.",
-    status: "Próximamente",
-  },
-  {
-    name: "Promociones",
-    description:
-      "Verificación de ejecución promocional con evidencia fotográfica.",
-    status: "Próximamente",
-  },
-  {
-    name: "IoT y Sensores",
-    description:
-      "Temperatura, apertura de puertas y telemetría de equipos en frío.",
-    status: "Próximamente",
-  },
+const otherModules = [
+  { name: "Distribución", description: "Cobertura, frecuencia de visita y rutas optimizadas." },
+  { name: "Precios", description: "Captura de precios en campo con análisis competitivo." },
+  { name: "Inventario", description: "Stock en punto de venta y alertas de quiebre." },
+  { name: "Promociones", description: "Verificación de ejecución promocional con evidencia." },
+  { name: "IoT y Sensores", description: "Temperatura, apertura de puertas y telemetría en frío." },
 ];
 
 export function ModuleCards() {
   return (
-    <section id="plataforma" className="py-32 lg:py-40">
-      <div className="mx-auto max-w-[1200px] px-6 lg:px-8">
-        <ScrollReveal>
-          <p className="text-[0.8125rem] font-medium uppercase tracking-[0.15em] text-accent">
-            La plataforma
-          </p>
-          <h2 className="mt-4 max-w-xl font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-bold leading-[1.1] tracking-[-0.02em]">
-            Todo lo que necesitas para la ejecución perfecta.
-          </h2>
-        </ScrollReveal>
+    <section id="plataforma" className="py-36 lg:py-48">
+      <div className="mx-auto max-w-[1400px] px-8 lg:px-12">
+        {/* Two-column asymmetric layout */}
+        <div className="grid gap-16 lg:grid-cols-[1fr_1fr] lg:gap-20">
+          {/* Left — featured module with score ring */}
+          <ScrollReveal>
+            <div>
+              <p className="text-[0.75rem] font-medium uppercase tracking-[0.2em] text-text-muted">
+                La plataforma
+              </p>
+              <h2 className="mt-5 font-display text-[clamp(2rem,4vw,3.25rem)] font-bold leading-[1.05] tracking-[-0.03em]">
+                Todo lo que necesitas para la ejecución perfecta.
+              </h2>
+              <p className="mt-5 text-[1.0625rem] leading-[1.7] text-text-secondary">
+                Un ecosistema modular diseñado para las realidades de la distribución
+                en Latinoamérica. Empieza con lo que necesitas, crece cuando quieras.
+              </p>
 
-        <div className="mt-16 grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
-          {modules.map((m, i) => (
-            <ScrollReveal key={m.name} delay={i * 0.05}>
-              <div className="flex h-full cursor-default flex-col justify-between bg-bg p-8 transition-colors duration-200 hover:bg-bg-soft">
-                <div>
-                  <div className="mb-5 flex items-center justify-between">
-                    <span className="font-display text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-text-muted">
-                      {String(i + 1).padStart(2, "0")}
+              {/* Featured: Control de Calidad */}
+              <div className="mt-12 rounded-[8px] border border-border p-8">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <span className="text-[0.6875rem] font-medium uppercase tracking-[0.15em] text-accent">
+                      Disponible ahora
                     </span>
-                    {m.status === "Disponible" ? (
-                      <span className="text-[0.6875rem] font-medium text-accent">
-                        Disponible
-                      </span>
-                    ) : (
-                      <span className="text-[0.6875rem] text-text-muted">
-                        Próximamente
-                      </span>
-                    )}
+                    <h3 className="mt-2 font-display text-[1.5rem] font-semibold">
+                      Control de Calidad
+                    </h3>
+                    <p className="mt-2 max-w-sm text-[0.9375rem] leading-[1.7] text-text-secondary">
+                      Auditorías digitales con puntaje automático por zona. Fotos,
+                      checklists y cumplimiento en tiempo real.
+                    </p>
                   </div>
-                  <h3 className="font-display text-[1.125rem] font-semibold text-text">
-                    {m.name}
-                  </h3>
-                  <p className="mt-2 text-[0.875rem] leading-[1.65] text-text-secondary">
-                    {m.description}
-                  </p>
+                  <div className="hidden sm:block">
+                    <ScoreRing score={92} size={100} strokeWidth={5} />
+                  </div>
                 </div>
               </div>
-            </ScrollReveal>
-          ))}
+            </div>
+          </ScrollReveal>
+
+          {/* Right — other modules as minimal list */}
+          <ScrollReveal delay={0.15}>
+            <div className="lg:pt-24">
+              <p className="mb-6 text-[0.75rem] font-medium uppercase tracking-[0.2em] text-text-muted">
+                Próximamente
+              </p>
+              <div className="divide-y divide-border">
+                {otherModules.map((m) => (
+                  <div key={m.name} className="group py-5">
+                    <h3 className="font-display text-[1.125rem] font-semibold text-text transition-colors duration-300 group-hover:text-accent">
+                      {m.name}
+                    </h3>
+                    <p className="mt-1 text-[0.875rem] leading-[1.6] text-text-muted">
+                      {m.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

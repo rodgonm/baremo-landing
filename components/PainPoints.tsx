@@ -10,26 +10,26 @@ const statements = [
 
 export function PainPoints() {
   return (
-    <section className="border-t border-border">
-      {statements.map((text, i) => (
-        <div
-          key={i}
-          className="flex min-h-[45vh] items-center justify-center px-6"
-        >
+    <section className="py-20 lg:py-32">
+      <div className="mx-auto max-w-[1400px] px-8 lg:px-12">
+        {statements.map((text, i) => (
+          <div key={i} className="py-16 lg:py-24">
+            <ScrollReveal>
+              <p className="max-w-[900px] font-display text-[clamp(1.5rem,3.5vw,2.75rem)] font-semibold leading-[1.2] tracking-[-0.02em] text-text-muted">
+                {text}
+              </p>
+            </ScrollReveal>
+          </div>
+        ))}
+
+        {/* Transition — full black */}
+        <div className="py-16 lg:py-24">
           <ScrollReveal>
-            <p className="mx-auto max-w-[700px] text-center font-display text-[clamp(1.375rem,2.8vw,2rem)] font-medium leading-[1.35] tracking-[-0.01em] text-text-secondary">
-              {text}
+            <p className="font-display text-[clamp(2rem,5vw,4rem)] font-extrabold leading-[1] tracking-[-0.04em] text-text">
+              Baremo cambia esto.
             </p>
           </ScrollReveal>
         </div>
-      ))}
-
-      <div className="flex min-h-[35vh] items-center justify-center px-6 pb-20">
-        <ScrollReveal>
-          <p className="text-center font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-bold tracking-[-0.02em] text-text">
-            Baremo cambia esto.
-          </p>
-        </ScrollReveal>
       </div>
     </section>
   );

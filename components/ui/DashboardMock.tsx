@@ -17,87 +17,99 @@ const stats = [
 
 export function DashboardMock() {
   return (
-    <div className="overflow-hidden rounded-lg border border-border bg-bg shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
-      {/* Browser bar */}
-      <div className="flex items-center gap-2 border-b border-border px-4 py-3">
-        <div className="flex gap-1.5">
-          <div className="h-2.5 w-2.5 rounded-full bg-border-hover" />
-          <div className="h-2.5 w-2.5 rounded-full bg-border-hover" />
-          <div className="h-2.5 w-2.5 rounded-full bg-border-hover" />
+    <div className="overflow-hidden rounded-[12px] border border-border bg-bg shadow-[0_4px_24px_rgba(0,0,0,0.06)]">
+      {/* Browser chrome */}
+      <div className="flex items-center border-b border-border px-5 py-3">
+        <div className="flex gap-2">
+          <div className="h-[10px] w-[10px] rounded-full bg-[#FF5F56]" />
+          <div className="h-[10px] w-[10px] rounded-full bg-[#FFBD2E]" />
+          <div className="h-[10px] w-[10px] rounded-full bg-[#27C93F]" />
         </div>
-        <div className="ml-4 flex-1 rounded bg-bg-muted px-3 py-1">
-          <span className="text-[0.6875rem] text-text-muted">app.baremo.ai/dashboard</span>
+        <div className="ml-6 flex-1">
+          <div className="mx-auto max-w-[280px] rounded-full bg-bg-muted px-4 py-1.5 text-center">
+            <span className="text-[0.6875rem] text-text-muted">app.baremo.ai</span>
+          </div>
         </div>
+        <div className="w-[54px]" />
       </div>
 
-      <div className="grid gap-px bg-border lg:grid-cols-[1fr_260px]">
-        {/* Main area */}
-        <div className="space-y-px bg-border">
-          {/* Map placeholder */}
-          <div className="relative bg-bg-soft p-6">
-            <p className="mb-3 text-[0.6875rem] font-medium uppercase tracking-wider text-text-muted">
-              Guatemala — Mapa de cumplimiento
-            </p>
-            <div className="relative aspect-[16/9] overflow-hidden rounded bg-bg-muted">
-              {/* Simplified dots */}
+      {/* Dashboard body */}
+      <div className="grid lg:grid-cols-[1fr_280px]">
+        {/* Main content */}
+        <div className="border-r border-border">
+          {/* Map area */}
+          <div className="border-b border-border p-6 lg:p-8">
+            <div className="mb-4 flex items-center justify-between">
+              <span className="text-[0.6875rem] font-medium uppercase tracking-[0.15em] text-text-muted">
+                Mapa de cumplimiento
+              </span>
+              <span className="text-[0.6875rem] text-text-muted">Guatemala</span>
+            </div>
+            <div className="relative aspect-[2/1] rounded-[8px] bg-bg-muted">
+              {/* Map dots */}
               {[
-                { x: 35, y: 30 }, { x: 28, y: 50 }, { x: 52, y: 25 },
-                { x: 20, y: 38 }, { x: 62, y: 55 }, { x: 45, y: 42 },
-                { x: 72, y: 35 }, { x: 55, y: 15 }, { x: 15, y: 28 },
+                { x: 33, y: 32, o: 1 }, { x: 27, y: 52, o: 0.7 }, { x: 50, y: 24, o: 0.85 },
+                { x: 18, y: 40, o: 0.6 }, { x: 60, y: 56, o: 0.5 }, { x: 44, y: 44, o: 0.9 },
+                { x: 70, y: 36, o: 0.65 }, { x: 54, y: 16, o: 0.75 }, { x: 14, y: 28, o: 0.55 },
+                { x: 38, y: 60, o: 0.8 }, { x: 76, y: 48, o: 0.45 }, { x: 22, y: 18, o: 0.7 },
               ].map((d, i) => (
                 <div
                   key={i}
-                  className="absolute h-2 w-2 rounded-full bg-accent"
-                  style={{ left: `${d.x}%`, top: `${d.y}%`, opacity: 0.4 + (i % 3) * 0.2 }}
+                  className="absolute h-[6px] w-[6px] rounded-full bg-teal"
+                  style={{ left: `${d.x}%`, top: `${d.y}%`, opacity: d.o }}
                 />
               ))}
             </div>
           </div>
 
           {/* Trend chart */}
-          <div className="bg-bg p-6">
-            <p className="mb-3 text-[0.6875rem] font-medium uppercase tracking-wider text-text-muted">
+          <div className="p-6 lg:p-8">
+            <span className="text-[0.6875rem] font-medium uppercase tracking-[0.15em] text-text-muted">
               Tendencia — 8 semanas
-            </p>
-            <svg viewBox="0 0 400 60" className="w-full">
-              <polyline
-                points="0,42 57,38 114,30 171,33 228,24 285,18 342,14 400,10"
-                fill="none"
-                stroke="#00A87A"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <polyline
-                points="0,42 57,38 114,30 171,33 228,24 285,18 342,14 400,10"
-                fill="none"
-                stroke="#00A87A"
-                strokeWidth="0"
-              />
+            </span>
+            <svg viewBox="0 0 500 80" className="mt-4 w-full" preserveAspectRatio="none">
+              {/* Subtle grid */}
+              {[20, 40, 60].map((y) => (
+                <line key={y} x1="0" y1={y} x2="500" y2={y} stroke="#E8E8E8" strokeWidth="0.5" />
+              ))}
               <polygon
-                points="0,42 57,38 114,30 171,33 228,24 285,18 342,14 400,10 400,60 0,60"
+                points="0,58 72,52 144,40 216,44 288,32 360,24 432,18 500,12 500,80 0,80"
                 fill="#00A87A"
                 opacity="0.06"
               />
+              <polyline
+                points="0,58 72,52 144,40 216,44 288,32 360,24 432,18 500,12"
+                fill="none"
+                stroke="#00A87A"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              {/* Data points */}
+              {[[0, 58], [72, 52], [144, 40], [216, 44], [288, 32], [360, 24], [432, 18], [500, 12]].map(
+                ([cx, cy], i) => (
+                  <circle key={i} cx={cx} cy={cy} r="3" fill="#fff" stroke="#00A87A" strokeWidth="1.5" />
+                )
+              )}
             </svg>
           </div>
         </div>
 
-        {/* Sidebar — leaderboard */}
-        <div className="bg-bg p-6">
-          <p className="mb-4 text-[0.6875rem] font-medium uppercase tracking-wider text-text-muted">
+        {/* Sidebar */}
+        <div className="p-6 lg:p-8">
+          <span className="text-[0.6875rem] font-medium uppercase tracking-[0.15em] text-text-muted">
             Rankings por territorio
-          </p>
-          <div className="space-y-3">
+          </span>
+          <div className="mt-5 space-y-4">
             {leaderboard.map((item) => (
               <div key={item.rank} className="flex items-center gap-3">
-                <span className="font-display text-[0.75rem] font-semibold text-text-muted">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-bg-muted font-display text-[0.6875rem] font-semibold text-text-muted">
                   {item.rank}
                 </span>
-                <span className="flex-1 truncate text-[0.8125rem] text-text">
+                <span className="flex-1 truncate text-[0.8125rem]">
                   {item.name}
                 </span>
-                <span className="font-display text-[0.8125rem] font-semibold text-text">
+                <span className="font-display text-[0.8125rem] font-semibold">
                   {item.score}
                 </span>
               </div>
@@ -106,12 +118,15 @@ export function DashboardMock() {
         </div>
       </div>
 
-      {/* Bottom stats */}
-      <div className="grid grid-cols-2 gap-px border-t border-border bg-border lg:grid-cols-4">
-        {stats.map((s) => (
-          <div key={s.label} className="bg-bg px-5 py-4">
-            <p className="font-display text-[1.125rem] font-bold text-text">{s.value}</p>
-            <p className="text-[0.6875rem] text-text-muted">{s.label}</p>
+      {/* Stats bar */}
+      <div className="grid grid-cols-2 border-t border-border lg:grid-cols-4">
+        {stats.map((s, i) => (
+          <div
+            key={s.label}
+            className={`px-6 py-5 lg:px-8 ${i < stats.length - 1 ? "border-r border-border" : ""}`}
+          >
+            <p className="font-display text-[1.25rem] font-bold">{s.value}</p>
+            <p className="mt-0.5 text-[0.6875rem] text-text-muted">{s.label}</p>
           </div>
         ))}
       </div>

@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 
 export function ScoreRing({
   score = 86,
-  size = 140,
-  strokeWidth = 6,
+  size = 100,
+  strokeWidth = 5,
 }: {
   score?: number;
   size?: number;
@@ -40,7 +40,7 @@ export function ScoreRing({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="#E5E5E5"
+          stroke="#E8E8E8"
           strokeWidth={strokeWidth}
         />
         <circle
@@ -57,17 +57,8 @@ export function ScoreRing({
         />
       </svg>
       <div className="absolute flex flex-col items-center">
-        <span
-          className="font-display font-bold text-text"
-          style={{ fontSize: size * 0.26 }}
-        >
+        <span className="font-display font-bold" style={{ fontSize: size * 0.26 }}>
           {animatedScore}
-        </span>
-        <span
-          className="text-text-muted font-body"
-          style={{ fontSize: size * 0.085 }}
-        >
-          Cumplimiento
         </span>
       </div>
     </div>
