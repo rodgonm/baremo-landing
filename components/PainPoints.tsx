@@ -3,9 +3,9 @@
 import { ScrollReveal } from "./ui/ScrollReveal";
 
 const statements = [
-  "El gerente regional visita cada tienda. Compara de memoria. Escribe en papel.",
-  "Los datos quedan atrapados. Sin historial. Sin tendencias. Sin comparaciones.",
-  "HQ no sabe qué pasa en campo hasta que es demasiado tarde.",
+  "Tu equipo de campo visita tiendas todos los días. Compara de memoria. Reporta en papel.",
+  "Los datos quedan atrapados en WhatsApp y hojas de Excel. Sin historial. Sin tendencias.",
+  "La oficina central no sabe qué pasa en campo hasta que es demasiado tarde.",
 ];
 
 export function PainPoints() {
@@ -22,11 +22,10 @@ export function PainPoints() {
           </div>
         ))}
 
-        {/* Transition — full black */}
         <div className="py-16 lg:py-24">
           <ScrollReveal>
             <p className="font-display text-[clamp(2rem,5vw,4rem)] font-extrabold leading-[1] tracking-[-0.04em] text-text">
-              Baremo cambia esto.
+              Eso cambia hoy.
             </p>
           </ScrollReveal>
         </div>

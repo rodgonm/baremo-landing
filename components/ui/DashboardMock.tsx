@@ -1,5 +1,8 @@
 "use client";
 
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+
 const leaderboard = [
   { rank: 1, name: "Zona 10 — Capital", score: 94 },
   { rank: 2, name: "Mixco Centro", score: 91 },
@@ -14,6 +17,52 @@ const stats = [
   { label: "Auditorías hoy", value: "124" },
   { label: "Alertas activas", value: "12" },
 ];
+
+function AnimatedChart() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount: 0.3 });
+
+  return (
+    <svg ref={ref} viewBox="0 0 500 80" className="mt-4 w-full" preserveAspectRatio="none">
+      {[20, 40, 60].map((y) => (
+        <line key={y} x1="0" y1={y} x2="500" y2={y} stroke="#E8E8E8" strokeWidth="0.5" />
+      ))}
+      <polygon
+        points="0,58 72,52 144,40 216,44 288,32 360,24 432,18 500,12 500,80 0,80"
+        fill="#00A87A"
+        opacity={inView ? 0.06 : 0}
+        style={{ transition: "opacity 0.8s ease 0.5s" }}
+      />
+      <motion.polyline
+        points="0,58 72,52 144,40 216,44 288,32 360,24 432,18 500,12"
+        fill="none"
+        stroke="#00A87A"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={inView ? { pathLength: 1, opacity: 1 } : {}}
+        transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+      />
+      {[[0, 58], [72, 52], [144, 40], [216, 44], [288, 32], [360, 24], [432, 18], [500, 12]].map(
+        ([cx, cy], i) => (
+          <motion.circle
+            key={i}
+            cx={cx}
+            cy={cy}
+            r="3"
+            fill="#fff"
+            stroke="#00A87A"
+            strokeWidth="1.5"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={inView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ delay: 0.3 + i * 0.12, duration: 0.3 }}
+          />
+        )
+      )}
+    </svg>
+  );
+}
 
 export function DashboardMock() {
   return (
@@ -33,11 +82,10 @@ export function DashboardMock() {
         <div className="w-[54px]" />
       </div>
 
-      {/* Dashboard body */}
       <div className="grid lg:grid-cols-[1fr_280px]">
-        {/* Main content */}
+        {/* Main */}
         <div className="border-r border-border">
-          {/* Map area */}
+          {/* Map */}
           <div className="border-b border-border p-6 lg:p-8">
             <div className="mb-4 flex items-center justify-between">
               <span className="text-[0.6875rem] font-medium uppercase tracking-[0.15em] text-text-muted">
@@ -46,7 +94,6 @@ export function DashboardMock() {
               <span className="text-[0.6875rem] text-text-muted">Guatemala</span>
             </div>
             <div className="relative aspect-[2/1] rounded-[8px] bg-bg-muted">
-              {/* Map dots */}
               {[
                 { x: 33, y: 32, o: 1 }, { x: 27, y: 52, o: 0.7 }, { x: 50, y: 24, o: 0.85 },
                 { x: 18, y: 40, o: 0.6 }, { x: 60, y: 56, o: 0.5 }, { x: 44, y: 44, o: 0.9 },
@@ -62,36 +109,12 @@ export function DashboardMock() {
             </div>
           </div>
 
-          {/* Trend chart */}
+          {/* Chart with line-draw animation */}
           <div className="p-6 lg:p-8">
             <span className="text-[0.6875rem] font-medium uppercase tracking-[0.15em] text-text-muted">
               Tendencia — 8 semanas
             </span>
-            <svg viewBox="0 0 500 80" className="mt-4 w-full" preserveAspectRatio="none">
-              {/* Subtle grid */}
-              {[20, 40, 60].map((y) => (
-                <line key={y} x1="0" y1={y} x2="500" y2={y} stroke="#E8E8E8" strokeWidth="0.5" />
-              ))}
-              <polygon
-                points="0,58 72,52 144,40 216,44 288,32 360,24 432,18 500,12 500,80 0,80"
-                fill="#00A87A"
-                opacity="0.06"
-              />
-              <polyline
-                points="0,58 72,52 144,40 216,44 288,32 360,24 432,18 500,12"
-                fill="none"
-                stroke="#00A87A"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              {/* Data points */}
-              {[[0, 58], [72, 52], [144, 40], [216, 44], [288, 32], [360, 24], [432, 18], [500, 12]].map(
-                ([cx, cy], i) => (
-                  <circle key={i} cx={cx} cy={cy} r="3" fill="#fff" stroke="#00A87A" strokeWidth="1.5" />
-                )
-              )}
-            </svg>
+            <AnimatedChart />
           </div>
         </div>
 
@@ -106,12 +129,8 @@ export function DashboardMock() {
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-bg-muted font-display text-[0.6875rem] font-semibold text-text-muted">
                   {item.rank}
                 </span>
-                <span className="flex-1 truncate text-[0.8125rem]">
-                  {item.name}
-                </span>
-                <span className="font-display text-[0.8125rem] font-semibold">
-                  {item.score}
-                </span>
+                <span className="flex-1 truncate text-[0.8125rem]">{item.name}</span>
+                <span className="font-display text-[0.8125rem] font-semibold">{item.score}</span>
               </div>
             ))}
           </div>

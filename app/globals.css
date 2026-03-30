@@ -5,6 +5,7 @@
   --color-bg-soft: #FAFAFA;
   --color-bg-muted: #F3F3F2;
   --color-bg-elevated: #F8F8F7;
+  --color-bg-dark: #0A0A0A;
 
   --color-text: #000000;
   --color-text-secondary: #5C5C5C;
@@ -33,7 +34,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Link underline animation — oneam.it scaleX pattern */
+/* Link underline — oneam.it scaleX pattern */
 .link-hover {
   position: relative;
   display: inline-block;
@@ -55,23 +56,74 @@ body {
   transform-origin: left;
 }
 
-/* Gradient text — only for the word "baremo" in hero */
+/* Flowing gradient on "baremo" word */
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 .text-gradient {
-  background: linear-gradient(135deg, #00A87A, #00C9A7);
+  background: linear-gradient(135deg, #00A87A, #06b6d4, #00A87A);
+  background-size: 200% 200%;
+  animation: gradient-flow 6s linear infinite;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Smooth image reveal */
+/* Placeholder image/video areas */
+.placeholder-media {
+  background: var(--color-bg-muted);
+  position: relative;
+  overflow: hidden;
+}
+.placeholder-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(0,0,0,0.02) 50%, transparent 60%);
+  background-size: 200% 200%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Image reveal on hover */
 .img-reveal {
   overflow: hidden;
 }
-.img-reveal img {
+.img-reveal img,
+.img-reveal video {
   transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
-.img-reveal:hover img {
+.img-reveal:hover img,
+.img-reveal:hover video {
   transform: scale(1.03);
+}
+
+/* Chart line draw animation */
+@keyframes draw-line {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+.animate-draw {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw-line 1.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+/* Floating animation for cards */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+.animate-float-delayed {
+  animation: float 3s ease-in-out 1.5s infinite;
 }
 
 /* Reduced motion */

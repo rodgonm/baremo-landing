@@ -8,17 +8,17 @@ export function CTA() {
       <div className="mx-auto max-w-[1400px] px-8 lg:px-12">
         <ScrollReveal>
           <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] font-extrabold leading-[0.95] tracking-[-0.04em]">
-            ¿Listo para dejar
+            Mide lo que importa.
             <br />
-            el papel atrás?
+            <span className="text-text-muted">Empieza hoy.</span>
           </h2>
         </ScrollReveal>
 
         <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-20">
           <ScrollReveal delay={0.1}>
             <p className="max-w-md text-[1.0625rem] leading-[1.8] text-text-secondary">
-              Agenda una demo personalizada y descubre cómo Baremo puede
-              transformar tu ejecución en punto de venta.
+              Agenda una demo de 20 minutos. Te mostramos la plataforma
+              funcionando con datos de tu industria — sin compromisos.
             </p>
             <div className="mt-8 flex items-center gap-5">
               <a
@@ -28,7 +28,7 @@ export function CTA() {
                 Solicitar Demo
               </a>
               <a
-                href="https://wa.me/50212345678?text=Hola%2C%20me%20interesa%20una%20demo%20de%20Baremo"
+                href="https://wa.me/50212345678?text=Hola%2C%20me%20interesa%20una%20demo"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="link-hover cursor-pointer text-[0.9375rem] text-text-secondary transition-colors duration-300 hover:text-text"
