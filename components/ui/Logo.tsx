@@ -1,6 +1,6 @@
 export function Logo({
   size = "md",
-  variant = "dark",
+  variant = "light",
 }: {
   size?: "sm" | "md" | "lg" | "xl";
   variant?: "dark" | "light";
@@ -11,12 +11,12 @@ export function Logo({
     lg: "text-[56px]",
     xl: "text-[80px]",
   };
-  const textColor = variant === "dark" ? "text-text-primary" : "text-[#0f172a]";
-  const oColor = variant === "dark" ? "#00d4a0" : "#0F6E56";
+  const textColor = variant === "light" ? "text-[#0A0A0A]" : "text-[#f1f5f9]";
+  const oColor = variant === "light" ? "#00A87A" : "#00d4a0";
 
   return (
     <span
-      className={`font-outfit font-extrabold tracking-[-0.03em] leading-none whitespace-nowrap ${sizes[size]} ${textColor}`}
+      className={`font-display font-extrabold tracking-[-0.03em] leading-none whitespace-nowrap ${sizes[size]} ${textColor}`}
     >
       barem
       <span
@@ -24,7 +24,6 @@ export function Logo({
         style={{ fontSize: "105%", color: oColor }}
       >
         o
-        {/* Top crosshair line */}
         <span
           className="absolute rounded-sm"
           style={{
@@ -36,7 +35,6 @@ export function Logo({
             background: oColor,
           }}
         />
-        {/* Bottom crosshair line */}
         <span
           className="absolute rounded-sm"
           style={{
@@ -48,7 +46,6 @@ export function Logo({
             background: oColor,
           }}
         />
-        {/* Center dot */}
         <span
           className="absolute rounded-full"
           style={{

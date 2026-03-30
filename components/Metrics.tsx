@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { ScrollReveal } from "./ui/ScrollReveal";
 
 const metrics = [
-  { value: 5, suffix: " min", label: "Auditoría completa", color: "text-text-primary" },
-  { value: 100, suffix: "%", label: "Digital. Cero papel.", color: "text-text-primary" },
-  { value: 0, suffix: "", label: "Datos al instante", color: "text-brand-primary", display: "Tiempo real" },
+  { value: 5, suffix: " min", label: "Auditoría completa" },
+  { value: 100, suffix: "%", label: "Digital. Cero papel." },
+  { value: 0, suffix: "", label: "Datos al instante", display: "Tiempo real" },
 ];
 
 function Counter({ value, suffix, display }: { value: number; suffix: string; display?: string }) {
@@ -21,7 +21,7 @@ function Counter({ value, suffix, display }: { value: number; suffix: string; di
       ([entry]) => {
         if (entry.isIntersecting && !counted.current) {
           counted.current = true;
-          const duration = 1200;
+          const duration = 1000;
           const start = performance.now();
 
           function animate(now: number) {
@@ -51,16 +51,16 @@ function Counter({ value, suffix, display }: { value: number; suffix: string; di
 
 export function Metrics() {
   return (
-    <section className="py-32">
-      <div className="mx-auto max-w-[1200px] px-6">
-        <div className="grid gap-8 md:grid-cols-3">
+    <section className="border-t border-border py-28 lg:py-36">
+      <div className="mx-auto max-w-[1200px] px-6 lg:px-8">
+        <div className="grid gap-12 md:grid-cols-3 md:gap-0 md:divide-x md:divide-border">
           {metrics.map((m, i) => (
-            <ScrollReveal key={m.label} delay={i * 0.1}>
+            <ScrollReveal key={m.label} delay={i * 0.08}>
               <div className="text-center">
-                <p className={`font-outfit text-[clamp(3rem,6vw,5rem)] font-extrabold leading-none ${m.color}`}>
+                <p className="font-display text-[clamp(3rem,6vw,4.5rem)] font-extrabold leading-none tracking-[-0.03em] text-text">
                   <Counter value={m.value} suffix={m.suffix} display={m.display} />
                 </p>
-                <p className="mt-3 text-sm text-text-secondary">{m.label}</p>
+                <p className="mt-3 text-[0.875rem] text-text-secondary">{m.label}</p>
               </div>
             </ScrollReveal>
           ))}

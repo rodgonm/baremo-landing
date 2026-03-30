@@ -3,25 +3,31 @@
 import { ScrollReveal } from "./ui/ScrollReveal";
 
 const categories = [
-  "Bebidas", "Snacks", "Lácteos", "Cuidado personal", "Farmacéutica", "Cerveza", "Licores", "Alimentos",
+  "Bebidas",
+  "Snacks",
+  "Lácteos",
+  "Cuidado personal",
+  "Farmacéutica",
+  "Cerveza",
+  "Licores",
+  "Alimentos",
 ];
 
 export function TrustSignal() {
   return (
     <section className="py-16">
-      <div className="mx-auto max-w-[1200px] px-6">
+      <div className="mx-auto max-w-[1200px] px-6 lg:px-8">
         <ScrollReveal>
-          <p className="text-center font-outfit text-lg font-semibold text-text-secondary">
+          <p className="text-center text-[0.9375rem] text-text-muted">
             Diseñado para las marcas que mueven Latinoamérica.
           </p>
         </ScrollReveal>
-
-        <ScrollReveal delay={0.1}>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-6">
+        <ScrollReveal delay={0.08}>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             {categories.map((cat) => (
               <span
                 key={cat}
-                className="rounded-full border border-border-default px-4 py-2 text-sm text-text-muted/50 transition-colors hover:text-text-muted"
+                className="rounded-full border border-border px-4 py-1.5 text-[0.8125rem] text-text-muted transition-colors duration-200 hover:text-text-secondary"
               >
                 {cat}
               </span>

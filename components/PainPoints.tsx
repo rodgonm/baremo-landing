@@ -10,24 +10,23 @@ const statements = [
 
 export function PainPoints() {
   return (
-    <section className="bg-bg-deep">
+    <section className="border-t border-border">
       {statements.map((text, i) => (
         <div
           key={i}
-          className="flex min-h-[50vh] items-center justify-center px-6"
+          className="flex min-h-[45vh] items-center justify-center px-6"
         >
           <ScrollReveal>
-            <p className="max-w-3xl text-center font-outfit text-[clamp(1.5rem,3vw,2.25rem)] font-semibold leading-snug text-text-secondary">
+            <p className="mx-auto max-w-[700px] text-center font-display text-[clamp(1.375rem,2.8vw,2rem)] font-medium leading-[1.35] tracking-[-0.01em] text-text-secondary">
               {text}
             </p>
           </ScrollReveal>
         </div>
       ))}
 
-      {/* Transition */}
-      <div className="flex min-h-[40vh] items-center justify-center px-6">
+      <div className="flex min-h-[35vh] items-center justify-center px-6 pb-20">
         <ScrollReveal>
-          <p className="text-center font-outfit text-[clamp(1.75rem,3.5vw,2.75rem)] font-bold text-brand-primary">
+          <p className="text-center font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-bold tracking-[-0.02em] text-text">
             Baremo cambia esto.
           </p>
         </ScrollReveal>

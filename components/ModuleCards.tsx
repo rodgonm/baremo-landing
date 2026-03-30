@@ -1,135 +1,89 @@
 "use client";
 
-import { useRef } from "react";
 import { ScrollReveal } from "./ui/ScrollReveal";
-import { ScoreRing } from "./ui/ScoreRing";
 
 const modules = [
   {
     name: "Control de Calidad",
-    description: "Auditorías digitales con puntaje automático por zona. Fotos, checklists y cumplimiento en tiempo real.",
-    color: "#00d4a0",
-    icon: "✓",
+    description:
+      "Auditorías digitales con puntaje automático por zona. Fotos, checklists y cumplimiento en tiempo real.",
     status: "Disponible",
-    featured: true,
   },
   {
     name: "Distribución",
-    description: "Cobertura, frecuencia de visita y rutas optimizadas.",
-    color: "#f59e0b",
-    icon: "📦",
+    description:
+      "Cobertura, frecuencia de visita y rutas optimizadas para cada territorio.",
     status: "Próximamente",
   },
   {
     name: "Precios",
-    description: "Captura de precios en campo con análisis competitivo.",
-    color: "#3b82f6",
-    icon: "💲",
+    description:
+      "Captura de precios en campo con análisis competitivo automatizado.",
     status: "Próximamente",
   },
   {
     name: "Inventario",
-    description: "Stock en punto de venta y alertas de quiebre.",
-    color: "#a855f7",
-    icon: "📊",
+    description:
+      "Stock en punto de venta con alertas inteligentes de quiebre.",
     status: "Próximamente",
   },
   {
     name: "Promociones",
-    description: "Verificación de ejecución promocional con evidencia.",
-    color: "#ef4444",
-    icon: "🏷️",
+    description:
+      "Verificación de ejecución promocional con evidencia fotográfica.",
     status: "Próximamente",
   },
   {
-    name: "IoT & Sensores",
-    description: "Temperatura, apertura de puertas y telemetría en frío.",
-    color: "#06b6d4",
-    icon: "📡",
+    name: "IoT y Sensores",
+    description:
+      "Temperatura, apertura de puertas y telemetría de equipos en frío.",
     status: "Próximamente",
   },
 ];
 
 export function ModuleCards() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
   return (
-    <section id="soluciones" className="py-32">
-      <div className="mx-auto max-w-[1200px] px-6">
+    <section id="plataforma" className="py-32 lg:py-40">
+      <div className="mx-auto max-w-[1200px] px-6 lg:px-8">
         <ScrollReveal>
-          <span className="mb-4 inline-block font-outfit text-sm font-semibold uppercase tracking-wider text-brand-primary">
+          <p className="text-[0.8125rem] font-medium uppercase tracking-[0.15em] text-accent">
             La plataforma
-          </span>
-          <h2 className="max-w-2xl font-outfit text-[clamp(1.75rem,3.5vw,2.75rem)] font-bold leading-tight">
+          </p>
+          <h2 className="mt-4 max-w-xl font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-bold leading-[1.1] tracking-[-0.02em]">
             Todo lo que necesitas para la ejecución perfecta.
           </h2>
         </ScrollReveal>
-      </div>
 
-      {/* Horizontal scroll */}
-      <div
-        ref={scrollRef}
-        className="mt-12 flex gap-5 overflow-x-auto px-6 pb-4 scrollbar-hide lg:pl-[max(1.5rem,calc((100vw-1200px)/2+1.5rem))]"
-        style={{ scrollbarWidth: "none" }}
-      >
-        {modules.map((m, i) => (
-          <ScrollReveal key={m.name} delay={i * 0.08}>
-            <div
-              className={`group shrink-0 rounded-2xl border border-border-default bg-bg-card transition-all hover:-translate-y-1 hover:border-border-hover hover:bg-bg-card-hover ${
-                m.featured ? "w-[420px]" : "w-[320px]"
-              }`}
-            >
-              {/* Top accent */}
-              <div
-                className="h-1 rounded-t-2xl"
-                style={{ background: m.color }}
-              />
-
-              <div className="p-6">
-                {/* Icon + status */}
-                <div className="mb-4 flex items-center justify-between">
-                  <div
-                    className="flex h-10 w-10 items-center justify-center rounded-xl text-lg"
-                    style={{ background: `${m.color}15` }}
-                  >
-                    {m.icon}
+        <div className="mt-16 grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+          {modules.map((m, i) => (
+            <ScrollReveal key={m.name} delay={i * 0.05}>
+              <div className="flex h-full cursor-default flex-col justify-between bg-bg p-8 transition-colors duration-200 hover:bg-bg-soft">
+                <div>
+                  <div className="mb-5 flex items-center justify-between">
+                    <span className="font-display text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-text-muted">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    {m.status === "Disponible" ? (
+                      <span className="text-[0.6875rem] font-medium text-accent">
+                        Disponible
+                      </span>
+                    ) : (
+                      <span className="text-[0.6875rem] text-text-muted">
+                        Próximamente
+                      </span>
+                    )}
                   </div>
-                  <span
-                    className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                      m.status === "Disponible"
-                        ? "bg-brand-primary-dim text-brand-primary"
-                        : "bg-bg-surface text-text-muted"
-                    }`}
-                  >
-                    {m.status}
-                  </span>
+                  <h3 className="font-display text-[1.125rem] font-semibold text-text">
+                    {m.name}
+                  </h3>
+                  <p className="mt-2 text-[0.875rem] leading-[1.65] text-text-secondary">
+                    {m.description}
+                  </p>
                 </div>
-
-                <h3 className="mb-2 font-outfit text-lg font-semibold text-text-primary">
-                  {m.name}
-                </h3>
-                <p className="text-sm leading-relaxed text-text-secondary">
-                  {m.description}
-                </p>
-
-                {/* Featured card mini ring */}
-                {m.featured && (
-                  <div className="mt-6 flex items-center gap-4 border-t border-border-default pt-6">
-                    <ScoreRing score={92} size={64} strokeWidth={5} />
-                    <div>
-                      <p className="text-sm font-medium text-text-primary">
-                        Puntaje promedio
-                      </p>
-                      <p className="text-xs text-text-muted">
-                        Últimos 30 días
-                      </p>
-                    </div>
-                  </div>
-                )}
               </div>
-            </div>
-          </ScrollReveal>
-        ))}
+            </ScrollReveal>
+          ))}
+        </div>
       </div>
     </section>
   );

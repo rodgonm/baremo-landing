@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 
 export function ScoreRing({
   score = 86,
-  size = 160,
-  strokeWidth = 10,
+  size = 140,
+  strokeWidth = 6,
 }: {
   score?: number;
   size?: number;
@@ -17,7 +17,7 @@ export function ScoreRing({
   const offset = circumference - (animatedScore / 100) * circumference;
 
   useEffect(() => {
-    const duration = 1500;
+    const duration = 1200;
     const start = performance.now();
 
     function animate(now: number) {
@@ -28,15 +28,9 @@ export function ScoreRing({
       if (progress < 1) requestAnimationFrame(animate);
     }
 
-    const timer = setTimeout(() => requestAnimationFrame(animate), 500);
+    const timer = setTimeout(() => requestAnimationFrame(animate), 300);
     return () => clearTimeout(timer);
   }, [score]);
-
-  const getColor = (s: number) => {
-    if (s >= 85) return "#00d4a0";
-    if (s >= 70) return "#f59e0b";
-    return "#ef4444";
-  };
 
   return (
     <div className="relative inline-flex items-center justify-center">
@@ -46,7 +40,7 @@ export function ScoreRing({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="rgba(148, 163, 184, 0.08)"
+          stroke="#E5E5E5"
           strokeWidth={strokeWidth}
         />
         <circle
@@ -54,7 +48,7 @@ export function ScoreRing({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke={getColor(animatedScore)}
+          stroke="#00A87A"
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
@@ -64,14 +58,14 @@ export function ScoreRing({
       </svg>
       <div className="absolute flex flex-col items-center">
         <span
-          className="font-outfit font-extrabold text-text-primary"
-          style={{ fontSize: size * 0.28 }}
+          className="font-display font-bold text-text"
+          style={{ fontSize: size * 0.26 }}
         >
           {animatedScore}
         </span>
         <span
           className="text-text-muted font-body"
-          style={{ fontSize: size * 0.09 }}
+          style={{ fontSize: size * 0.085 }}
         >
           Cumplimiento
         </span>
