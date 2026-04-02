@@ -20,8 +20,7 @@ export const metadata: Metadata = {
     "Plataforma AI para ejecución en punto de venta. Auditorías digitales, puntajes en tiempo real y análisis inteligente para distribución en Latinoamérica.",
   openGraph: {
     title: "Baremo — Inteligencia Retail para Latinoamérica",
-    description:
-      "Plataforma AI para ejecución en punto de venta.",
+    description: "Plataforma AI para ejecución en punto de venta.",
     url: "https://baremo.ai",
     siteName: "Baremo",
     locale: "es_GT",
@@ -36,6 +35,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${jakarta.variable} ${inter.variable}`}>
+      <head>
+        <noscript>
+          <style>{`.splash-overlay{display:none}[data-splash-content]{opacity:1!important}`}</style>
+        </noscript>
+      </head>
       <body className="min-h-screen antialiased">{children}</body>
     </html>
   );

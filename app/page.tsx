@@ -1,3 +1,4 @@
+import { SplashScreen } from "@/components/SplashScreen";
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { ModuleCards } from "@/components/ModuleCards";
@@ -14,7 +15,7 @@ import { FloatingElements } from "@/components/FloatingElements";
 
 export default function Home() {
   return (
-    <>
+    <SplashScreen>
       <Nav />
       <Hero />
       <ModuleCards />
@@ -28,6 +29,6 @@ export default function Home() {
       <CTA />
       <Footer />
       <FloatingElements />
-    </>
+    </SplashScreen>
   );
 }

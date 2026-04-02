@@ -1,13 +1,15 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useContext } from "react";
 import { gsap, SplitText, useGSAP } from "@/lib/gsap-setup";
+import { SplashContext } from "./SplashScreen";
 
 export function Hero() {
   const container = useRef<HTMLDivElement>(null);
+  const { isReady } = useContext(SplashContext);
 
   useGSAP(() => {
-    if (!container.current) return;
+    if (!container.current || !isReady) return;
 
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) {
@@ -41,12 +43,11 @@ export function Hero() {
       { opacity: 1, y: 0, scale: 1, duration: 1, ease: "power2.out" },
       1.0
     );
-  }, { scope: container });
+  }, { scope: container, dependencies: [isReady] });
 
   return (
     <section ref={container} className="px-8 pb-12 pt-[72px] lg:px-12 lg:pb-16">
       <div className="mx-auto max-w-[1400px]">
-        {/* Text block — generous top spacing that scales with viewport */}
         <div className="pt-[max(3rem,8vh)]">
           <p className="hero-label hero-animate mb-4 font-display text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-brand" style={{ opacity: 0 }}>
             Retail intelligence platform
@@ -81,7 +82,6 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Product visual — aspect ratio adapts to viewport */}
         <div className="hero-visual mt-12 lg:mt-16" style={{ opacity: 0 }}>
           <div className="placeholder-media aspect-[16/7] w-full rounded-2xl lg:aspect-[2.4/1]">
             <div className="flex h-full items-center justify-center">
