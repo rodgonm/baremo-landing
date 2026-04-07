@@ -6,48 +6,74 @@ import { gsap, SplitText, useGSAP } from "@/lib/gsap-setup";
 export function Hero() {
   const container = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    if (!container.current) return;
+  useGSAP(
+    () => {
+      if (!container.current) return;
 
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) {
-      gsap.set(container.current.querySelectorAll(".hero-animate"), { opacity: 1, y: 0 });
-      return;
-    }
+      const prefersReduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      if (prefersReduced) {
+        gsap.set(container.current.querySelectorAll(".hero-animate"), {
+          opacity: 1,
+          y: 0,
+        });
+        return;
+      }
 
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-    tl.fromTo(".hero-label", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, 0.1);
+      tl.fromTo(
+        ".hero-label",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6 },
+        0.1,
+      );
 
-    SplitText.create(".hero-headline", {
-      type: "lines",
-      mask: "lines",
-      linesClass: "overflow-hidden",
-      onSplit(self) {
-        tl.fromTo(
-          self.lines,
-          { y: "100%" },
-          { y: "0%", duration: 0.9, stagger: 0.1, ease: "power4.out" },
-          0.2
-        );
-      },
-    });
+      SplitText.create(".hero-headline", {
+        type: "lines",
+        mask: "lines",
+        linesClass: "overflow-hidden",
+        onSplit(self) {
+          tl.fromTo(
+            self.lines,
+            { y: "100%" },
+            { y: "0%", duration: 0.9, stagger: 0.1, ease: "power4.out" },
+            0.2,
+          );
+        },
+      });
 
-    tl.fromTo(".hero-body", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7 }, 0.7);
-    tl.fromTo(".hero-cta", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.1 }, 0.9);
-    tl.fromTo(
-      ".hero-visual",
-      { opacity: 0, y: 40, scale: 0.98 },
-      { opacity: 1, y: 0, scale: 1, duration: 1, ease: "power2.out" },
-      1.0
-    );
-  }, { scope: container });
+      tl.fromTo(
+        ".hero-body",
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.7 },
+        0.7,
+      );
+      tl.fromTo(
+        ".hero-cta",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, stagger: 0.1 },
+        0.9,
+      );
+      tl.fromTo(
+        ".hero-visual",
+        { opacity: 0, y: 40, scale: 0.98 },
+        { opacity: 1, y: 0, scale: 1, duration: 1, ease: "power2.out" },
+        1.0,
+      );
+    },
+    { scope: container },
+  );
 
   return (
     <section ref={container} className="px-8 pb-12 pt-[72px] lg:px-12 lg:pb-16">
       <div className="mx-auto max-w-[1400px]">
         <div className="pt-[max(3rem,8vh)]">
-          <p className="hero-label hero-animate mb-4 font-display text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-brand" style={{ opacity: 0 }}>
+          <p
+            className="hero-label hero-animate mb-4 font-display text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-brand"
+            style={{ opacity: 0 }}
+          >
             Retail intelligence platform
           </p>
 
@@ -56,10 +82,13 @@ export function Hero() {
             <span className="text-gradient">tiempo real</span>.
           </h1>
 
-          <p className="hero-body hero-animate mt-6 max-w-[480px] text-[0.9375rem] leading-[1.7] text-text-secondary lg:text-[1rem]" style={{ opacity: 0 }}>
+          <p
+            className="hero-body hero-animate mt-6 max-w-[480px] text-[0.9375rem] leading-[1.7] text-text-secondary lg:text-[1rem]"
+            style={{ opacity: 0 }}
+          >
             Auditorías de punto de venta que tu equipo completa en 5 minutos.
-            Puntajes instantáneos. Dashboards que muestran todo tu territorio
-            — sin esperar el reporte del viernes.
+            Puntajes instantáneos. Dashboards que muestran todo tu territorio —
+            sin esperar el reporte del viernes.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -81,12 +110,10 @@ export function Hero() {
         </div>
 
         <div className="hero-visual mt-12 lg:mt-16" style={{ opacity: 0 }}>
-          <div className="placeholder-media aspect-[16/7] w-full rounded-2xl lg:aspect-[2.4/1]">
-            <div className="flex h-full items-center justify-center">
-              <span className="text-[0.6875rem] uppercase tracking-[0.15em] text-text-muted">
-                Video / screenshot del producto
-              </span>
-            </div>
+          <div className="overflow-hidden rounded-2xl bg-bg-muted">
+            <video autoPlay muted loop playsInline className="w-full" poster="">
+              <source src="/hero-video.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
       </div>
