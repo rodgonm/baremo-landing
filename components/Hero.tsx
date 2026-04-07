@@ -1,10 +1,11 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, SplitText, useGSAP } from "@/lib/gsap-setup";
+import { gsap, ScrollTrigger, SplitText, useGSAP } from "@/lib/gsap-setup";
 
 export function Hero() {
   const container = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useGSAP(
     () => {
@@ -62,6 +63,24 @@ export function Hero() {
         { opacity: 1, y: 0, scale: 1, duration: 1, ease: "power2.out" },
         1.0,
       );
+
+      // Play video when hero visual enters viewport, pause on last frame
+      if (videoRef.current) {
+        const video = videoRef.current;
+
+        ScrollTrigger.create({
+          trigger: video,
+          start: "top 90%",
+          onEnter: () => {
+            video.currentTime = 0;
+            video.play();
+          },
+          onEnterBack: () => {
+            video.currentTime = 0;
+            video.play();
+          },
+        });
+      }
     },
     { scope: container },
   );
@@ -111,7 +130,7 @@ export function Hero() {
 
         <div className="hero-visual mt-12 lg:mt-16" style={{ opacity: 0 }}>
           <div className="overflow-hidden rounded-2xl bg-bg-muted">
-            <video autoPlay muted loop playsInline className="w-full" poster="">
+            <video ref={videoRef} muted playsInline className="w-full">
               <source src="/hero-video.mp4" type="video/mp4" />
             </video>
           </div>
