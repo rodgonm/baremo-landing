@@ -1,15 +1,13 @@
 "use client";
 
-import { useRef, useContext } from "react";
+import { useRef } from "react";
 import { gsap, SplitText, useGSAP } from "@/lib/gsap-setup";
-import { SplashContext } from "./SplashScreen";
 
 export function Hero() {
   const container = useRef<HTMLDivElement>(null);
-  const { isReady } = useContext(SplashContext);
 
   useGSAP(() => {
-    if (!container.current || !isReady) return;
+    if (!container.current) return;
 
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) {
@@ -43,7 +41,7 @@ export function Hero() {
       { opacity: 1, y: 0, scale: 1, duration: 1, ease: "power2.out" },
       1.0
     );
-  }, { scope: container, dependencies: [isReady] });
+  }, { scope: container });
 
   return (
     <section ref={container} className="px-8 pb-12 pt-[72px] lg:px-12 lg:pb-16">
