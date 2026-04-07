@@ -35,6 +35,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${jakarta.variable} ${inter.variable}`}>
+      <head>
+        <noscript>
+          <style>{`.splash-overlay{display:none}[data-splash-content]{opacity:1!important;visibility:visible!important}`}</style>
+        </noscript>
+      </head>
       <body className="min-h-screen antialiased">{children}</body>
     </html>
   );

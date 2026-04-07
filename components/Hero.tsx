@@ -1,15 +1,17 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useContext } from "react";
 import { gsap, ScrollTrigger, SplitText, useGSAP } from "@/lib/gsap-setup";
+import { SplashContext } from "./SplashScreen";
 
 export function Hero() {
   const container = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const { isReady } = useContext(SplashContext);
 
   useGSAP(
     () => {
-      if (!container.current) return;
+      if (!container.current || !isReady) return;
 
       const prefersReduced = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
@@ -64,9 +66,10 @@ export function Hero() {
         1.0,
       );
 
-      // Play video when hero visual enters viewport, pause on last frame
+      // Video: play once when visible, freeze on last frame, replay on scroll back
       if (videoRef.current) {
         const video = videoRef.current;
+        video.loop = false;
 
         ScrollTrigger.create({
           trigger: video,
@@ -82,7 +85,7 @@ export function Hero() {
         });
       }
     },
-    { scope: container },
+    { scope: container, dependencies: [isReady] },
   );
 
   return (
@@ -130,7 +133,12 @@ export function Hero() {
 
         <div className="hero-visual mt-12 lg:mt-16" style={{ opacity: 0 }}>
           <div className="overflow-hidden rounded-2xl bg-bg-muted">
-            <video ref={videoRef} muted playsInline className="w-full">
+            <video
+              ref={videoRef}
+              muted
+              playsInline
+              className="w-full"
+            >
               <source src="/hero-video.mp4" type="video/mp4" />
             </video>
           </div>
