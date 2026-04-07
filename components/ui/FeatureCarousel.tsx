@@ -13,67 +13,67 @@ interface Step {
 
 const steps: Step[] = [
   {
-    id: "audit",
-    label: "Auditoría",
-    title: "Auditorías digitales en 5 minutos",
+    id: "ejecucion",
+    label: "Ejecución en PDV",
+    title: "Control de ejecución en punto de venta",
     description:
-      "Tu equipo abre la app, selecciona la tienda y completa el checklist con fotos. Puntaje automático por zona — el vendedor sabe qué mejorar antes de irse.",
+      "Auditorías digitales con puntaje automático por zona. Checklists con fotos, cumplimiento en tiempo real y resultados instantáneos para tu equipo en campo.",
     images: [
       {
         src: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&auto=format&fit=crop",
-        alt: "Retail store audit",
+        alt: "Ejecución en punto de venta",
         className: "w-[48%] left-[2%] top-[12%]",
       },
       {
         src: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&auto=format&fit=crop",
-        alt: "Mobile app interface",
+        alt: "App móvil de auditoría",
         className: "w-[55%] left-[42%] top-[30%]",
       },
     ],
   },
   {
-    id: "dashboard",
-    label: "Dashboard",
-    title: "Todo tu territorio en una pantalla",
+    id: "distribucion",
+    label: "Distribución",
+    title: "Cobertura y rutas optimizadas",
     description:
-      "Mapas en tiempo real, tendencias semanales, rankings por zona. Sin esperar el reporte del viernes — los datos están ahí cuando los necesitas.",
+      "Frecuencia de visita, cobertura por territorio y rutas inteligentes. Asegura que tu equipo llegue a las tiendas correctas, en el momento correcto.",
     images: [
       {
         src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop",
-        alt: "Analytics dashboard",
+        alt: "Mapa de distribución",
         className: "w-[90%] left-[5%] top-[15%]",
       },
     ],
   },
   {
-    id: "reports",
-    label: "Reportes",
-    title: "Reportes inteligentes con AI",
+    id: "precios",
+    label: "Precios & Inventario",
+    title: "Precios competitivos y control de stock",
     description:
-      "Análisis que detecta patrones, predice caídas de cumplimiento y sugiere acciones correctivas. Reportes automáticos por WhatsApp al supervisor.",
+      "Captura de precios en campo con análisis competitivo automatizado. Alertas de quiebre de stock en tiempo real para no perder ventas.",
     images: [
       {
         src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop",
-        alt: "Data reports",
+        alt: "Análisis de precios",
         className: "w-[52%] left-[0%] top-[18%]",
       },
       {
         src: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&auto=format&fit=crop",
-        alt: "AI analysis",
+        alt: "Control de inventario",
         className: "w-[52%] left-[46%] top-[32%]",
       },
     ],
   },
   {
-    id: "field",
-    label: "Campo",
-    title: "Diseñado para el equipo en campo",
+    id: "iot",
+    label: "IoT & Sensores",
+    title: "Telemetría y control de cadena de frío",
     description:
-      "Funciona sin internet. Se sincroniza cuando vuelve la señal. Cero datos perdidos. Diseñado para el vendedor a las 7am con señal intermitente.",
+      "Monitoreo de temperatura, apertura de puertas y estado de equipos en frío. Datos de sensores en tiempo real integrados con el resto de tu operación.",
     images: [
       {
-        src: "https://images.unsplash.com/photo-1556740758-90de374c12ad?w=800&auto=format&fit=crop",
-        alt: "Field team working",
+        src: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&auto=format&fit=crop",
+        alt: "Sensores IoT",
         className: "w-[90%] left-[5%] top-[15%]",
       },
     ],
