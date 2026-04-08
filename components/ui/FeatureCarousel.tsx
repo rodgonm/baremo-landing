@@ -8,7 +8,7 @@ interface Step {
   label: string;
   title: string;
   description: string;
-  images: { src: string; alt: string; className: string }[];
+  image?: string;
 }
 
 const steps: Step[] = [
@@ -18,18 +18,7 @@ const steps: Step[] = [
     title: "Control de ejecución en punto de venta",
     description:
       "Auditorías digitales con puntaje automático por zona. Checklists con fotos, cumplimiento en tiempo real y resultados instantáneos para tu equipo en campo.",
-    images: [
-      {
-        src: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&auto=format&fit=crop",
-        alt: "Ejecución en punto de venta",
-        className: "w-[48%] left-[2%] top-[12%]",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&auto=format&fit=crop",
-        alt: "App móvil de auditoría",
-        className: "w-[55%] left-[42%] top-[30%]",
-      },
-    ],
+    image: "/images/ejecucion.png",
   },
   {
     id: "distribucion",
@@ -37,13 +26,7 @@ const steps: Step[] = [
     title: "Cobertura y rutas optimizadas",
     description:
       "Frecuencia de visita, cobertura por territorio y rutas inteligentes. Asegura que tu equipo llegue a las tiendas correctas, en el momento correcto.",
-    images: [
-      {
-        src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop",
-        alt: "Mapa de distribución",
-        className: "w-[90%] left-[5%] top-[15%]",
-      },
-    ],
+    image: "/images/distribucion.png",
   },
   {
     id: "precios",
@@ -51,18 +34,8 @@ const steps: Step[] = [
     title: "Precios competitivos y control de stock",
     description:
       "Captura de precios en campo con análisis competitivo automatizado. Alertas de quiebre de stock en tiempo real para no perder ventas.",
-    images: [
-      {
-        src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop",
-        alt: "Análisis de precios",
-        className: "w-[52%] left-[0%] top-[18%]",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&auto=format&fit=crop",
-        alt: "Control de inventario",
-        className: "w-[52%] left-[46%] top-[32%]",
-      },
-    ],
+    image:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&auto=format&fit=crop",
   },
   {
     id: "iot",
@@ -70,32 +43,28 @@ const steps: Step[] = [
     title: "Telemetría y control de cadena de frío",
     description:
       "Monitoreo de temperatura, apertura de puertas y estado de equipos en frío. Datos de sensores en tiempo real integrados con el resto de tu operación.",
-    images: [
-      {
-        src: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&auto=format&fit=crop",
-        alt: "Sensores IoT",
-        className: "w-[90%] left-[5%] top-[15%]",
-      },
-    ],
+    image: "/images/iot.png",
   },
 ];
 
-const INTERVAL = 5000;
+const INTERVAL = 6000;
 
 export function FeatureCarousel() {
   const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
-  const imagesRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  // Auto-cycle
+  // Auto-cycle (stops when user clicks a step)
   const resetTimer = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
+    if (paused) return;
     timerRef.current = setTimeout(() => {
       setCurrent((prev) => (prev + 1) % steps.length);
     }, INTERVAL);
-  }, []);
+  }, [paused]);
 
   useEffect(() => {
     resetTimer();
@@ -104,50 +73,51 @@ export function FeatureCarousel() {
     };
   }, [current, resetTimer]);
 
-  // Animate content on step change
+  // GSAP animate on step change
   useGSAP(
     () => {
-      if (!textRef.current || !imagesRef.current) return;
+      if (!textRef.current || !imageRef.current) return;
 
       const prefersReduced = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
 
-      // Animate text
-      const textEls = textRef.current.querySelectorAll(".carousel-text-item");
+      // Text animation
+      const textEls = textRef.current.querySelectorAll(".carousel-text");
       if (prefersReduced) {
-        gsap.set(textEls, { opacity: 1, x: 0 });
+        gsap.set(textEls, { opacity: 1, y: 0 });
       } else {
         gsap.fromTo(
           textEls,
-          { opacity: 0, x: -20 },
+          { opacity: 0, y: 16 },
           {
             opacity: 1,
-            x: 0,
-            duration: 0.45,
-            stagger: 0.06,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.08,
             ease: "power3.out",
           },
         );
       }
 
-      // Animate images
-      const imgs = imagesRef.current.querySelectorAll(".carousel-img");
-      if (prefersReduced) {
-        gsap.set(imgs, { opacity: 1, scale: 1 });
-      } else {
-        gsap.fromTo(
-          imgs,
-          { opacity: 0, scale: 0.92, y: 15 },
-          {
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            duration: 0.5,
-            stagger: 0.1,
-            ease: "power3.out",
-          },
-        );
+      // Image animation
+      const img = imageRef.current.querySelector(".carousel-image");
+      if (img) {
+        if (prefersReduced) {
+          gsap.set(img, { opacity: 1, scale: 1 });
+        } else {
+          gsap.fromTo(
+            img,
+            { opacity: 0, scale: 0.95 },
+            {
+              opacity: 1,
+              scale: 1,
+              duration: 0.6,
+              ease: "power3.out",
+              delay: 0.1,
+            },
+          );
+        }
       }
     },
     { scope: containerRef, dependencies: [current] },
@@ -155,50 +125,50 @@ export function FeatureCarousel() {
 
   const handleStepClick = (idx: number) => {
     if (idx === current) return;
+    setPaused(true); // Stop auto-cycle permanently once user interacts
     setCurrent(idx);
   };
 
   const step = steps[current];
 
   return (
-    <div ref={containerRef} className="flex w-full flex-col gap-10">
+    <div ref={containerRef} className="flex w-full flex-col gap-8">
       {/* Card */}
-      <div className="relative w-full overflow-hidden rounded-2xl border border-border bg-bg">
-        <div className="flex min-h-[480px] flex-col p-8 lg:p-10">
-          {/* Text content */}
+      <div className="overflow-hidden rounded-2xl border border-border bg-bg">
+        <div className="grid min-h-[400px] lg:grid-cols-[1fr_1fr]">
+          {/* Left — text */}
           <div
             ref={textRef}
-            className="relative z-10 max-w-[55%] lg:max-w-[45%]"
+            className="flex flex-col justify-center p-8 lg:p-10"
           >
-            <p className="carousel-text-item font-display text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-brand">
+            <p className="carousel-text font-display text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-brand">
               {step.label}
             </p>
-            <h3 className="carousel-text-item mt-3 font-display text-[1.5rem] font-bold leading-[1.15] tracking-[-0.02em] text-text lg:text-[1.75rem]">
+            <h3 className="carousel-text mt-3 font-display text-[1.375rem] font-bold leading-[1.15] tracking-[-0.02em] text-text lg:text-[1.625rem]">
               {step.title}
             </h3>
-            <p className="carousel-text-item mt-3 text-[0.875rem] leading-[1.7] text-text-secondary lg:text-[0.9375rem]">
+            <p className="carousel-text mt-3 max-w-md text-[0.875rem] leading-[1.7] text-text-secondary lg:text-[0.9375rem]">
               {step.description}
             </p>
           </div>
 
-          {/* Images */}
-          <div ref={imagesRef} className="absolute inset-0">
-            {step.images.map((img, i) => (
-              <img
-                key={`${step.id}-${i}`}
-                src={img.src}
-                alt={img.alt}
-                className={`carousel-img absolute rounded-xl border border-border object-cover shadow-[0_8px_30px_rgba(0,0,0,0.08)] ${img.className}`}
-                style={{ userSelect: "none" }}
-                loading="lazy"
-              />
-            ))}
+          {/* Right — image */}
+          <div
+            ref={imageRef}
+            className="relative min-h-[250px] bg-bg-muted lg:min-h-0"
+          >
+            <img
+              key={step.id}
+              src={step.image}
+              alt={step.title}
+              className="carousel-image h-full w-full object-cover"
+            />
           </div>
         </div>
       </div>
 
       {/* Step navigation */}
-      <nav className="flex justify-center" aria-label="Feature steps">
+      <nav className="flex justify-center" aria-label="Módulos">
         <div className="flex flex-wrap items-center gap-2">
           {steps.map((s, idx) => {
             const isActive = current === idx;
@@ -245,6 +215,21 @@ export function FeatureCarousel() {
           })}
         </div>
       </nav>
+
+      {/* Paused indicator */}
+      {paused && (
+        <div className="flex justify-center">
+          <button
+            onClick={() => {
+              setPaused(false);
+              setCurrent((current + 1) % steps.length);
+            }}
+            className="cursor-pointer text-[0.6875rem] text-text-muted transition-colors hover:text-text-secondary"
+          >
+            ▶ Reanudar auto-play
+          </button>
+        </div>
+      )}
     </div>
   );
 }

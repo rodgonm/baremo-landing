@@ -25,9 +25,9 @@ export function Nav() {
         scrolled ? "bg-bg/90 backdrop-blur-2xl" : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-[72px] max-w-[1400px] items-center justify-between px-8 lg:px-12">
+      <div className="mx-auto flex h-[80px] max-w-[1400px] items-center justify-between px-8 lg:px-12">
         <a href="#" className="shrink-0">
-          <Logo size="sm" />
+          <Logo size="md" />
         </a>
 
         <div className="hidden items-center gap-10 md:flex">
@@ -66,7 +66,7 @@ export function Nav() {
       </div>
 
       <div
-        className={`fixed inset-0 top-[72px] bg-bg transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 top-[80px] bg-bg transition-opacity duration-300 md:hidden ${
           mobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
