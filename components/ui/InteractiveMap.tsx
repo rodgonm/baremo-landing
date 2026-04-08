@@ -28,6 +28,68 @@ function ScrollZoomControl() {
   return null;
 }
 
+// ── Mobile Filter (collapsible) ──
+function MobileFilter({
+  threshold,
+  onChange,
+  visible,
+  hidden,
+}: {
+  threshold: number;
+  onChange: (v: number) => void;
+  visible: number;
+  hidden: number;
+}) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div>
+      <div className="flex items-center justify-between">
+        <button
+          onClick={() => setOpen(!open)}
+          className="flex cursor-pointer items-center gap-2 rounded-full bg-bg-muted px-3 py-1.5 text-[0.6875rem] font-medium text-text-secondary min-h-[44px]"
+        >
+          <svg
+            className="h-3.5 w-3.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3 4h18M3 12h12M3 20h6"
+            />
+          </svg>
+          Filtrar {threshold > 0 && `(≥${threshold})`}
+        </button>
+        <span className="text-[0.625rem] text-text-muted">
+          {visible} visibles · {hidden} ocultas
+        </span>
+      </div>
+      {open && (
+        <div className="mt-2 flex items-center gap-3 rounded-lg bg-bg-muted p-3">
+          <label className="text-[0.625rem] text-text-muted shrink-0">
+            Umbral
+          </label>
+          <input
+            type="range"
+            min={0}
+            max={100}
+            value={threshold}
+            onChange={(e) => onChange(Number(e.target.value))}
+            className="h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-border accent-brand"
+          />
+          <span className="text-[0.75rem] font-semibold text-text w-8 text-right">
+            {threshold}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Store Detail Panel ──
 function StorePanel({ store, onClose }: { store: Store; onClose: () => void }) {
   const color = scoreColor(store.score);
@@ -476,29 +538,45 @@ export function InteractiveMap() {
 
       {/* Controls bar */}
       {autoPlayDone && (
-        <div className="flex flex-col gap-3 border-t border-border px-5 py-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-3">
-            <label className="text-[0.6875rem] text-text-muted">
-              Umbral de cumplimiento
-            </label>
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={threshold}
-              onChange={(e) => setThreshold(Number(e.target.value))}
-              className="h-1 w-24 sm:w-32 cursor-pointer appearance-none rounded-full bg-bg-muted accent-brand"
-            />
-            <span className="text-[0.6875rem] font-medium text-text-secondary">
-              {threshold}
-            </span>
+        <div className="border-t border-border px-5 py-3">
+          {/* Desktop: inline */}
+          <div className="hidden sm:flex sm:items-center sm:justify-between">
+            <div className="flex items-center gap-3">
+              <label className="text-[0.6875rem] text-text-muted">
+                Umbral de cumplimiento
+              </label>
+              <input
+                type="range"
+                min={0}
+                max={100}
+                value={threshold}
+                onChange={(e) => setThreshold(Number(e.target.value))}
+                className="h-1 w-32 cursor-pointer appearance-none rounded-full bg-bg-muted accent-brand"
+              />
+              <span className="text-[0.6875rem] font-medium text-text-secondary">
+                {threshold}
+              </span>
+            </div>
+            <p className="text-[0.6875rem] text-text-muted">
+              {filteredStores.length} tiendas visibles ·{" "}
+              {STORES.filter((s) => visibleStores.has(s.id)).length -
+                filteredStores.length}{" "}
+              ocultas
+            </p>
           </div>
-          <p className="text-[0.6875rem] text-text-muted">
-            {filteredStores.length} tiendas visibles ·{" "}
-            {STORES.filter((s) => visibleStores.has(s.id)).length -
-              filteredStores.length}{" "}
-            ocultas
-          </p>
+
+          {/* Mobile: compact expandable filter */}
+          <div className="sm:hidden">
+            <MobileFilter
+              threshold={threshold}
+              onChange={setThreshold}
+              visible={filteredStores.length}
+              hidden={
+                STORES.filter((s) => visibleStores.has(s.id)).length -
+                filteredStores.length
+              }
+            />
+          </div>
         </div>
       )}
 

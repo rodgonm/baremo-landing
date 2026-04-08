@@ -51,7 +51,7 @@ const INTERVAL = 6000;
 
 export function FeatureCarousel() {
   const [current, setCurrent] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(true); // Start paused, wait for scroll
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
