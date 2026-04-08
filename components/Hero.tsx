@@ -91,7 +91,7 @@ export function Hero() {
   return (
     <section ref={container} className="px-8 pb-12 pt-[72px] lg:px-12 lg:pb-16">
       <div className="mx-auto max-w-[1400px]">
-        <div className="pt-[max(3rem,8vh)]">
+        <div className="pt-[max(2rem,5vh)]">
           <p
             className="hero-label hero-animate mb-4 font-display text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-brand"
             style={{ opacity: 0 }}
@@ -131,16 +131,13 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="hero-visual mt-12 lg:mt-16" style={{ opacity: 0 }}>
-          <div
-            className="overflow-hidden rounded-2xl bg-bg-muted"
-            style={{ maxHeight: "65vh" }}
-          >
+        <div className="hero-visual mt-10 lg:mt-12" style={{ opacity: 0 }}>
+          <div className="overflow-hidden rounded-2xl bg-bg-muted lg:max-h-[420px]">
             <video
               ref={videoRef}
               muted
               playsInline
-              className="w-full object-cover"
+              className="w-full object-cover lg:max-h-[420px]"
             >
               <source src="/hero-video.mp4" type="video/mp4" />
             </video>
