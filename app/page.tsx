@@ -3,7 +3,7 @@ import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { ModuleCards } from "@/components/ModuleCards";
 import { PainPoints } from "@/components/PainPoints";
-import { ProductShowcase } from "@/components/ProductShowcase";
+import { InteractiveDemo } from "@/components/InteractiveDemo";
 import { HowItWorks } from "@/components/HowItWorks";
 import { OriginStory } from "@/components/OriginStory";
 import { Capabilities } from "@/components/Capabilities";
@@ -20,7 +20,7 @@ export default function Home() {
       <Hero />
       <ModuleCards />
       <PainPoints />
-      <ProductShowcase />
+      <InteractiveDemo />
       <HowItWorks />
       <OriginStory />
       <Capabilities />
