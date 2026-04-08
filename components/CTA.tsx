@@ -5,9 +5,9 @@ import { ScrollReveal } from "./ui/ScrollReveal";
 export function CTA() {
   return (
     <section id="contacto" className="bg-bg-dark py-36 lg:py-48">
-      <div className="mx-auto max-w-[1400px] px-8 lg:px-12">
+      <div className="mx-auto max-w-[1400px] px-5 md:px-8 lg:px-12">
         <ScrollReveal>
-          <h2 className="max-w-[700px] font-display text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold leading-[0.98] tracking-[-0.04em] text-white">
+          <h2 className="max-w-[700px] font-display text-[clamp(2rem,5vw,4.5rem)] font-extrabold leading-[0.98] tracking-[-0.04em] text-white">
             Mide lo que importa.
             <br />
             <span className="text-[#444]">Empieza hoy.</span>

@@ -4,11 +4,31 @@ import { useState, useRef, useEffect } from "react";
 import { ScrollReveal } from "./ui/ScrollReveal";
 
 const capabilities = [
-  { title: "Funciona sin internet", description: "La app completa auditorías offline. Se sincroniza cuando vuelve la señal. Cero datos perdidos." },
-  { title: "5 minutos por tienda", description: "Checklists optimizados y captura rápida. Tu equipo audita más tiendas en menos tiempo, sin capacitación." },
-  { title: "Reportes por WhatsApp", description: "Al completar una auditoría, el supervisor recibe el puntaje por WhatsApp automáticamente." },
-  { title: "Análisis inteligente", description: "Detecta patrones, predice caídas de cumplimiento y sugiere acciones correctivas." },
-  { title: "Una plataforma, múltiples marcas", description: "Cada cliente tiene su espacio aislado. Sus criterios, sus usuarios, sus datos." },
+  {
+    title: "Funciona sin internet",
+    description:
+      "La app completa auditorías offline. Se sincroniza cuando vuelve la señal. Cero datos perdidos.",
+  },
+  {
+    title: "5 minutos por tienda",
+    description:
+      "Checklists optimizados y captura rápida. Tu equipo audita más tiendas en menos tiempo, sin capacitación.",
+  },
+  {
+    title: "Reportes por WhatsApp",
+    description:
+      "Al completar una auditoría, el supervisor recibe el puntaje por WhatsApp automáticamente.",
+  },
+  {
+    title: "Análisis inteligente",
+    description:
+      "Detecta patrones, predice caídas de cumplimiento y sugiere acciones correctivas.",
+  },
+  {
+    title: "Una plataforma, múltiples marcas",
+    description:
+      "Cada cliente tiene su espacio aislado. Sus criterios, sus usuarios, sus datos.",
+  },
 ];
 
 function AccordionItem({
@@ -35,18 +55,27 @@ function AccordionItem({
         onClick={onToggle}
         className="flex w-full cursor-pointer items-center justify-between py-6 text-left"
       >
-        <span className={`font-display text-[1rem] font-semibold transition-colors duration-300 ${
-          isOpen ? "text-text" : "text-text-muted"
-        }`}>
+        <span
+          className={`font-display text-[1rem] font-semibold transition-colors duration-300 ${
+            isOpen ? "text-text" : "text-text-muted"
+          }`}
+        >
           {cap.title}
         </span>
         <svg
           className={`h-4 w-4 shrink-0 text-text-muted transition-transform duration-300 ${
             isOpen ? "rotate-45" : ""
           }`}
-          fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={1.5}
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 4v16m8-8H4"
+          />
         </svg>
       </button>
       <div
@@ -67,7 +96,7 @@ export function Capabilities() {
 
   return (
     <section className="py-32 lg:py-40">
-      <div className="mx-auto max-w-[1400px] px-8 lg:px-12">
+      <div className="mx-auto max-w-[1400px] px-5 md:px-8 lg:px-12">
         <div className="grid gap-16 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
           <ScrollReveal>
             <div className="lg:sticky lg:top-32">
@@ -78,8 +107,8 @@ export function Capabilities() {
                 Diseñado para las realidades del campo.
               </h2>
               <p className="mt-4 text-[0.9375rem] leading-[1.7] text-text-secondary">
-                No es otro SaaS genérico adaptado. Cada feature nació de
-                un problema real en distribución latinoamericana.
+                No es otro SaaS genérico adaptado. Cada feature nació de un
+                problema real en distribución latinoamericana.
               </p>
             </div>
           </ScrollReveal>

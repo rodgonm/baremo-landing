@@ -52,7 +52,7 @@ function StorePanel({ store, onClose }: { store: Store; onClose: () => void }) {
     <div className="flex h-full flex-col overflow-y-auto">
       <button
         onClick={onClose}
-        className="mb-4 cursor-pointer self-start text-[0.75rem] text-[#666] transition-colors hover:text-text"
+        className="mb-4 min-h-[44px] min-w-[44px] flex items-center cursor-pointer self-start text-[0.75rem] text-[#666] transition-colors hover:text-text"
       >
         ← Cerrar
       </button>
@@ -428,7 +428,7 @@ export function InteractiveMap() {
           <MapContainer
             center={[14.613, -90.535]}
             zoom={12}
-            className="h-[350px] w-full lg:h-full"
+            className="h-[280px] sm:h-[350px] w-full lg:h-full"
             style={{ background: "#f2f2f0", minHeight: 350 }}
             zoomControl={false}
             attributionControl={false}
@@ -487,7 +487,7 @@ export function InteractiveMap() {
               max={100}
               value={threshold}
               onChange={(e) => setThreshold(Number(e.target.value))}
-              className="h-1 w-32 cursor-pointer appearance-none rounded-full bg-bg-muted accent-brand"
+              className="h-1 w-24 sm:w-32 cursor-pointer appearance-none rounded-full bg-bg-muted accent-brand"
             />
             <span className="text-[0.6875rem] font-medium text-text-secondary">
               {threshold}

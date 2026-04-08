@@ -5,10 +5,13 @@ import { ScrollReveal } from "./ui/ScrollReveal";
 export function OriginStory() {
   return (
     <section id="nosotros" className="bg-bg-dark py-36 lg:py-48">
-      <div className="mx-auto max-w-[1400px] px-8 lg:px-12">
+      <div className="mx-auto max-w-[1400px] px-5 md:px-8 lg:px-12">
         <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
           <ScrollReveal>
-            <div className="placeholder-media aspect-[4/5] overflow-hidden rounded-2xl" style={{ background: '#161616' }}>
+            <div
+              className="placeholder-media aspect-[4/5] overflow-hidden rounded-2xl"
+              style={{ background: "#161616" }}
+            >
               <div className="flex h-full items-center justify-center px-6">
                 <span className="text-center text-[0.6875rem] uppercase tracking-[0.15em] text-[#444]">
                   Foto — equipo / Guatemala / campo
@@ -27,9 +30,10 @@ export function OriginStory() {
               </h2>
               <div className="mt-8 space-y-5 text-[0.9375rem] leading-[1.8] text-[#888]">
                 <p>
-                  La distribución en Latinoamérica tiene retos que el software genérico
-                  no entiende: conectividad intermitente, miles de puntos de venta con
-                  condiciones diferentes, equipos enormes en campo.
+                  La distribución en Latinoamérica tiene retos que el software
+                  genérico no entiende: conectividad intermitente, miles de
+                  puntos de venta con condiciones diferentes, equipos enormes en
+                  campo.
                 </p>
                 <p>
                   Cada decisión de producto la diseñamos pensando en el vendedor

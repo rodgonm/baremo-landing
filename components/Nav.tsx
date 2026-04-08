@@ -70,7 +70,7 @@ export function Nav() {
           mobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="flex flex-col gap-1 px-8 pt-12">
+        <div className="flex flex-col gap-1 px-5 md:px-8 pt-12">
           {navLinks.map((link) => (
             <a
               key={link.href}

@@ -304,7 +304,7 @@ const steps = [
 export function HowItWorks() {
   return (
     <section id="como-funciona" className="bg-bg-soft py-32 lg:py-40">
-      <div className="mx-auto max-w-[1400px] px-8 lg:px-12">
+      <div className="mx-auto max-w-[1400px] px-5 md:px-8 lg:px-12">
         <ScrollReveal>
           <p className="font-display text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-brand">
             Cómo funciona

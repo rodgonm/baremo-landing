@@ -89,7 +89,10 @@ export function Hero() {
   );
 
   return (
-    <section ref={container} className="px-8 pb-12 pt-[80px] lg:px-12 lg:pb-16">
+    <section
+      ref={container}
+      className="px-5 md:px-8 pb-12 pt-20 md:pt-[80px] lg:px-12 lg:pb-16"
+    >
       <div className="mx-auto max-w-[1400px]">
         <div className="pt-[max(2rem,5vh)]">
           <p

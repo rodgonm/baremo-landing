@@ -10,7 +10,7 @@ const links = [
 export function Footer() {
   return (
     <footer className="border-t border-border bg-bg">
-      <div className="mx-auto max-w-[1400px] px-8 py-16 lg:px-12">
+      <div className="mx-auto max-w-[1400px] px-5 md:px-8 py-16 lg:px-12">
         <div className="grid gap-12 lg:grid-cols-[1fr_auto_auto]">
           <div>
             <Logo size="md" />
@@ -46,9 +46,11 @@ export function Footer() {
       </div>
 
       <div className="border-t border-border">
-        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-8 py-5 lg:px-12">
+        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-5 md:px-8 py-5 lg:px-12">
           <p className="text-[0.75rem] text-text-muted">© 2026 Baremo</p>
-          <p className="text-[0.75rem] italic text-text-muted">El estándar ya cambió.</p>
+          <p className="text-[0.75rem] italic text-text-muted">
+            El estándar ya cambió.
+          </p>
         </div>
       </div>
     </footer>

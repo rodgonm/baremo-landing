@@ -6,7 +6,7 @@ import { FeatureCarousel } from "./ui/FeatureCarousel";
 export function ModuleCards() {
   return (
     <section id="plataforma" className="bg-bg-soft py-32 lg:py-40">
-      <div className="mx-auto max-w-[1400px] px-8 lg:px-12">
+      <div className="mx-auto max-w-[1400px] px-5 md:px-8 lg:px-12">
         <ScrollReveal>
           <p className="font-display text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-brand">
             La plataforma

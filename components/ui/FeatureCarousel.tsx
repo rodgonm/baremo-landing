@@ -34,7 +34,8 @@ const steps: Step[] = [
     title: "Precios competitivos y control de stock",
     description:
       "Captura de precios en campo con análisis competitivo automatizado. Alertas de quiebre de stock en tiempo real para no perder ventas.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&auto=format&fit=crop",
   },
   {
     id: "iot",
@@ -67,33 +68,52 @@ export function FeatureCarousel() {
 
   useEffect(() => {
     resetTimer();
-    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
   }, [current, resetTimer]);
 
   // Restart auto-cycle when user scrolls back to this section
-  useGSAP(() => {
-    if (!containerRef.current) return;
-    ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: "top 80%",
-      onEnter: () => { setPaused(false); },
-      onEnterBack: () => { setPaused(false); setCurrent(0); },
-    });
-  }, { scope: containerRef });
+  useGSAP(
+    () => {
+      if (!containerRef.current) return;
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top 80%",
+        onEnter: () => {
+          setPaused(false);
+        },
+        onEnterBack: () => {
+          setPaused(false);
+          setCurrent(0);
+        },
+      });
+    },
+    { scope: containerRef },
+  );
 
   // GSAP animate on step change
   useGSAP(
     () => {
       if (!textRef.current || !imageRef.current) return;
-      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const prefersReduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
 
       const textEls = textRef.current.querySelectorAll(".carousel-text");
       if (prefersReduced) {
         gsap.set(textEls, { opacity: 1, y: 0 });
       } else {
-        gsap.fromTo(textEls,
+        gsap.fromTo(
+          textEls,
           { opacity: 0, y: 14 },
-          { opacity: 1, y: 0, duration: 0.45, stagger: 0.07, ease: "power3.out" },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.45,
+            stagger: 0.07,
+            ease: "power3.out",
+          },
         );
       }
 
@@ -102,9 +122,16 @@ export function FeatureCarousel() {
         if (prefersReduced) {
           gsap.set(img, { opacity: 1, scale: 1 });
         } else {
-          gsap.fromTo(img,
+          gsap.fromTo(
+            img,
             { opacity: 0, scale: 0.97 },
-            { opacity: 1, scale: 1, duration: 0.55, ease: "power3.out", delay: 0.08 },
+            {
+              opacity: 1,
+              scale: 1,
+              duration: 0.55,
+              ease: "power3.out",
+              delay: 0.08,
+            },
           );
         }
       }
@@ -126,7 +153,10 @@ export function FeatureCarousel() {
       <div className="overflow-hidden rounded-2xl border border-border bg-bg">
         <div className="grid min-h-[380px] lg:grid-cols-[1fr_1.1fr]">
           {/* Left — text */}
-          <div ref={textRef} className="flex flex-col justify-center p-8 lg:p-10">
+          <div
+            ref={textRef}
+            className="flex flex-col justify-center p-8 lg:p-10"
+          >
             <p className="carousel-text font-display text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-brand">
               {step.label}
             </p>
@@ -139,7 +169,10 @@ export function FeatureCarousel() {
           </div>
 
           {/* Right — image */}
-          <div ref={imageRef} className="relative min-h-[240px] bg-bg-muted lg:min-h-0">
+          <div
+            ref={imageRef}
+            className="relative min-h-[240px] bg-bg-muted lg:min-h-0"
+          >
             <img
               key={step.id}
               src={step.image}
@@ -162,20 +195,36 @@ export function FeatureCarousel() {
                 key={s.id}
                 type="button"
                 onClick={() => handleStepClick(idx)}
-                className={`flex cursor-pointer items-center gap-2 rounded-full px-4 py-2 text-[0.8125rem] font-medium transition-all duration-300 ${
-                  isActive ? "bg-text text-bg" : "bg-bg-muted text-text-secondary hover:bg-border"
+                className={`flex cursor-pointer items-center gap-2 rounded-full px-4 py-2 min-h-[44px] text-[0.8125rem] font-medium transition-all duration-300 ${
+                  isActive
+                    ? "bg-text text-bg"
+                    : "bg-bg-muted text-text-secondary hover:bg-border"
                 }`}
               >
-                <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[0.625rem] font-semibold transition-all duration-300 ${
-                  isActive ? "bg-brand text-white"
-                    : isCompleted ? "bg-brand text-white"
-                    : "bg-border text-text-muted"
-                }`}>
+                <span
+                  className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[0.625rem] font-semibold transition-all duration-300 ${
+                    isActive
+                      ? "bg-brand text-white"
+                      : isCompleted
+                        ? "bg-brand text-white"
+                        : "bg-border text-text-muted"
+                  }`}
+                >
                   {isCompleted ? (
-                    <svg className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      className="h-3 w-3"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={3}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                  ) : idx + 1}
+                  ) : (
+                    idx + 1
+                  )}
                 </span>
                 <span className="hidden sm:inline">{s.label}</span>
               </button>

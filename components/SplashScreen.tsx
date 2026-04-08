@@ -220,7 +220,7 @@ export function SplashScreen({ children }: { children: ReactNode }) {
           <svg
             ref={svgRef}
             viewBox="0 0 200 200"
-            className="absolute h-[180px] w-[180px] lg:h-[200px] lg:w-[200px]"
+            className="absolute h-[120px] w-[120px] sm:h-[160px] sm:w-[160px] lg:h-[200px] lg:w-[200px]"
             fill="none"
           >
             {/* Scan lines — initial coords set to center (100,100), animated by GSAP */}
@@ -290,16 +290,15 @@ export function SplashScreen({ children }: { children: ReactNode }) {
           {/* DOM logo — "o" fades in at center, then "barem" slides in */}
           <div className="absolute flex items-center">
             <span
-              className="splash-logo-text font-display text-[56px] font-extrabold leading-none tracking-[-0.03em] text-text lg:text-[64px]"
+              className="splash-logo-text font-display text-[32px] sm:text-[48px] font-extrabold leading-none tracking-[-0.03em] text-text lg:text-[64px]"
               style={{ opacity: 0 }}
             >
               barem
             </span>
             {/* The real "o" — exact copy from Logo.tsx with crosshair decorations */}
             <span
-              className="splash-logo-o relative inline-block font-display font-medium leading-none tracking-[-0.03em]"
+              className="splash-logo-o relative inline-block font-display font-medium leading-none tracking-[-0.03em] text-[calc(32px*1.05)] sm:text-[calc(48px*1.05)] lg:text-[calc(64px*1.05)]"
               style={{
-                fontSize: "calc(56px * 1.05)",
                 color: brandColor,
                 opacity: 0,
               }}

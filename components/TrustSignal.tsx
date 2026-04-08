@@ -3,14 +3,20 @@
 import { ScrollReveal } from "./ui/ScrollReveal";
 
 const categories = [
-  "Bebidas", "Snacks", "Lácteos", "Cuidado personal",
-  "Farmacéutica", "Cerveza", "Licores", "Alimentos",
+  "Bebidas",
+  "Snacks",
+  "Lácteos",
+  "Cuidado personal",
+  "Farmacéutica",
+  "Cerveza",
+  "Licores",
+  "Alimentos",
 ];
 
 export function TrustSignal() {
   return (
     <section className="border-t border-border py-20">
-      <div className="mx-auto max-w-[1400px] px-8 lg:px-12">
+      <div className="mx-auto max-w-[1400px] px-5 md:px-8 lg:px-12">
         <ScrollReveal>
           <p className="text-center text-[0.875rem] text-text-muted">
             Diseñado para las marcas que mueven Latinoamérica.
