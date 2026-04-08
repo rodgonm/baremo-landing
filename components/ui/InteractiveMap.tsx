@@ -1,9 +1,32 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { MapContainer, TileLayer, CircleMarker } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { STORES, LIVE_FEED, scoreColor, type Store } from "@/lib/store-data";
+
+// Disable scroll zoom until user clicks the map
+function ScrollZoomControl() {
+  const map = useMap();
+
+  useEffect(() => {
+    map.scrollWheelZoom.disable();
+
+    const enable = () => map.scrollWheelZoom.enable();
+    const disable = () => map.scrollWheelZoom.disable();
+
+    const container = map.getContainer();
+    container.addEventListener("click", enable);
+    container.addEventListener("mouseleave", disable);
+
+    return () => {
+      container.removeEventListener("click", enable);
+      container.removeEventListener("mouseleave", disable);
+    };
+  }, [map]);
+
+  return null;
+}
 
 // ── Store Detail Panel ──
 function StorePanel({ store, onClose }: { store: Store; onClose: () => void }) {
@@ -34,7 +57,9 @@ function StorePanel({ store, onClose }: { store: Store; onClose: () => void }) {
         ← Cerrar
       </button>
 
-      <h3 className="font-display text-[1.125rem] font-bold text-text">{store.name}</h3>
+      <h3 className="font-display text-[1.125rem] font-bold text-text">
+        {store.name}
+      </h3>
       <p className="mt-1 text-[0.75rem] text-text-muted">
         {store.type} · {store.territory}
       </p>
@@ -44,28 +69,51 @@ function StorePanel({ store, onClose }: { store: Store; onClose: () => void }) {
       <div className="my-5 flex justify-center">
         <div className="relative flex h-20 w-20 items-center justify-center">
           <svg viewBox="0 0 100 100" className="absolute inset-0 -rotate-90">
-            <circle cx="50" cy="50" r="42" fill="none" stroke="#E8E8E8" strokeWidth="5" />
             <circle
-              cx="50" cy="50" r="42" fill="none" stroke={color} strokeWidth="5"
+              cx="50"
+              cy="50"
+              r="42"
+              fill="none"
+              stroke="#E8E8E8"
+              strokeWidth="5"
+            />
+            <circle
+              cx="50"
+              cy="50"
+              r="42"
+              fill="none"
+              stroke={color}
+              strokeWidth="5"
               strokeLinecap="round"
               strokeDasharray={2 * Math.PI * 42}
               strokeDashoffset={2 * Math.PI * 42 * (1 - store.score / 100)}
             />
           </svg>
-          <span className="font-display text-[1.375rem] font-bold text-text">{store.score}</span>
+          <span className="font-display text-[1.375rem] font-bold text-text">
+            {store.score}
+          </span>
         </div>
       </div>
 
       {/* Zone bars */}
-      <p className="mb-2 text-[0.625rem] font-semibold uppercase tracking-[0.15em] text-text-muted">Zonas</p>
+      <p className="mb-2 text-[0.625rem] font-semibold uppercase tracking-[0.15em] text-text-muted">
+        Zonas
+      </p>
       <div className="space-y-2">
         {zoneEntries.map(([key, val]) => (
           <div key={key} className="flex items-center gap-2">
-            <span className="w-20 text-[0.75rem] text-text-secondary">{zoneLabels[key]}</span>
+            <span className="w-20 text-[0.75rem] text-text-secondary">
+              {zoneLabels[key]}
+            </span>
             <div className="h-1.5 flex-1 rounded-full bg-bg-muted">
-              <div className="h-full rounded-full" style={{ width: `${val}%`, background: scoreColor(val) }} />
+              <div
+                className="h-full rounded-full"
+                style={{ width: `${val}%`, background: scoreColor(val) }}
+              />
             </div>
-            <span className="w-7 text-right text-[0.75rem] font-semibold text-text">{val}</span>
+            <span className="w-7 text-right text-[0.75rem] font-semibold text-text">
+              {val}
+            </span>
           </div>
         ))}
       </div>
@@ -77,10 +125,22 @@ function StorePanel({ store, onClose }: { store: Store; onClose: () => void }) {
       <div className="rounded-lg border border-border bg-bg-soft p-3">
         <svg viewBox={`0 0 ${chartW} ${chartH + 20}`} className="w-full">
           {/* Y-axis labels */}
-          <text x="0" y="10" className="fill-[#999]" fontSize="7" fontFamily="Inter, sans-serif">
+          <text
+            x="0"
+            y="10"
+            className="fill-[#999]"
+            fontSize="7"
+            fontFamily="Inter, sans-serif"
+          >
             {trendMax}
           </text>
-          <text x="0" y={chartH + 2} className="fill-[#999]" fontSize="7" fontFamily="Inter, sans-serif">
+          <text
+            x="0"
+            y={chartH + 2}
+            className="fill-[#999]"
+            fontSize="7"
+            fontFamily="Inter, sans-serif"
+          >
             {trendMin}
           </text>
 
@@ -88,19 +148,29 @@ function StorePanel({ store, onClose }: { store: Store; onClose: () => void }) {
           {[0, 0.5, 1].map((p) => (
             <line
               key={p}
-              x1="22" y1={5 + p * chartH} x2={chartW} y2={5 + p * chartH}
-              stroke="#E8E8E8" strokeWidth="0.5"
+              x1="22"
+              y1={5 + p * chartH}
+              x2={chartW}
+              y2={5 + p * chartH}
+              stroke="#E8E8E8"
+              strokeWidth="0.5"
             />
           ))}
 
           {/* Line */}
           <polyline
-            points={store.trend.map((v, i) => {
-              const x = 22 + (i / 5) * (chartW - 30);
-              const y = 5 + ((trendMax - v) / trendRange) * chartH;
-              return `${x},${y}`;
-            }).join(" ")}
-            fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+            points={store.trend
+              .map((v, i) => {
+                const x = 22 + (i / 5) * (chartW - 30);
+                const y = 5 + ((trendMax - v) / trendRange) * chartH;
+                return `${x},${y}`;
+              })
+              .join(" ")}
+            fill="none"
+            stroke={color}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
 
           {/* Data points */}
@@ -109,10 +179,23 @@ function StorePanel({ store, onClose }: { store: Store; onClose: () => void }) {
             const y = 5 + ((trendMax - v) / trendRange) * chartH;
             return (
               <g key={i}>
-                <circle cx={x} cy={y} r="3" fill="white" stroke={color} strokeWidth="1.5" />
+                <circle
+                  cx={x}
+                  cy={y}
+                  r="3"
+                  fill="white"
+                  stroke={color}
+                  strokeWidth="1.5"
+                />
                 {/* Value label on last point */}
                 {i === store.trend.length - 1 && (
-                  <text x={x + 6} y={y + 3} fontSize="7" fontFamily="Inter, sans-serif" className="fill-text font-semibold">
+                  <text
+                    x={x + 6}
+                    y={y + 3}
+                    fontSize="7"
+                    fontFamily="Inter, sans-serif"
+                    className="fill-text font-semibold"
+                  >
                     {v}
                   </text>
                 )}
@@ -124,7 +207,15 @@ function StorePanel({ store, onClose }: { store: Store; onClose: () => void }) {
           {visitLabels.map((label, i) => {
             const x = 22 + (i / 5) * (chartW - 30);
             return (
-              <text key={i} x={x} y={chartH + 16} fontSize="6" textAnchor="middle" className="fill-[#999]" fontFamily="Inter, sans-serif">
+              <text
+                key={i}
+                x={x}
+                y={chartH + 16}
+                fontSize="6"
+                textAnchor="middle"
+                className="fill-[#999]"
+                fontFamily="Inter, sans-serif"
+              >
                 {label}
               </text>
             );
@@ -140,7 +231,10 @@ function StorePanel({ store, onClose }: { store: Store; onClose: () => void }) {
           </p>
           <ul className="space-y-1.5">
             {store.actions.map((a, i) => (
-              <li key={i} className="flex items-start gap-2 text-[0.75rem] text-text-secondary">
+              <li
+                key={i}
+                className="flex items-start gap-2 text-[0.75rem] text-text-secondary"
+              >
                 <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-border-hover" />
                 {a}
               </li>
@@ -159,7 +253,13 @@ function StorePanel({ store, onClose }: { store: Store; onClose: () => void }) {
 }
 
 // ── Live Feed ──
-function LiveFeed({ entries, alertVisible }: { entries: typeof LIVE_FEED; alertVisible: boolean }) {
+function LiveFeed({
+  entries,
+  alertVisible,
+}: {
+  entries: typeof LIVE_FEED;
+  alertVisible: boolean;
+}) {
   return (
     <div className="flex h-full flex-col">
       <p className="mb-4 text-[0.625rem] font-semibold uppercase tracking-[0.15em] text-text-muted">
@@ -168,17 +268,24 @@ function LiveFeed({ entries, alertVisible }: { entries: typeof LIVE_FEED; alertV
       <div className="space-y-2">
         {entries.map((e, i) => (
           <div key={i} className="flex items-start gap-2.5 rounded-lg p-2">
-            <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full" style={{ background: scoreColor(e.score) }} />
+            <span
+              className="mt-1.5 h-2 w-2 shrink-0 rounded-full"
+              style={{ background: scoreColor(e.score) }}
+            />
             <div className="min-w-0 flex-1">
               <p className="text-[0.75rem] text-text">
-                <span className="font-medium">{e.auditor}</span> completó auditoría
+                <span className="font-medium">{e.auditor}</span> completó
+                auditoría
               </p>
               <p className="text-[0.6875rem] text-text-muted">
                 {e.store} — {e.territory}
               </p>
             </div>
             <div className="shrink-0 text-right">
-              <span className="font-display text-[0.75rem] font-semibold" style={{ color: scoreColor(e.score) }}>
+              <span
+                className="font-display text-[0.75rem] font-semibold"
+                style={{ color: scoreColor(e.score) }}
+              >
                 {e.score}
               </span>
               <p className="text-[0.5625rem] text-text-muted">{e.time}</p>
@@ -191,7 +298,9 @@ function LiveFeed({ entries, alertVisible }: { entries: typeof LIVE_FEED; alertV
             <div className="flex items-start gap-2.5">
               <span className="mt-0.5 text-[0.75rem]">⚠</span>
               <div className="min-w-0 flex-1">
-                <p className="text-[0.75rem] font-medium text-red-600">ALERTA</p>
+                <p className="text-[0.75rem] font-medium text-red-600">
+                  ALERTA
+                </p>
                 <p className="text-[0.6875rem] text-red-500">
                   Mini-Super La Bendición — V. Nueva
                 </p>
@@ -199,7 +308,9 @@ function LiveFeed({ entries, alertVisible }: { entries: typeof LIVE_FEED; alertV
                   Cumplimiento en descenso por 6 semanas
                 </p>
               </div>
-              <span className="font-display text-[0.75rem] font-bold text-red-600">52</span>
+              <span className="font-display text-[0.75rem] font-bold text-red-600">
+                52
+              </span>
             </div>
           </div>
         )}
@@ -220,8 +331,13 @@ function StatsBar({ animate }: { animate: boolean }) {
   return (
     <div className="grid grid-cols-2 border-t border-border lg:grid-cols-4">
       {stats.map((s) => (
-        <div key={s.label} className="border-r border-border px-5 py-4 last:border-r-0">
-          <p className={`font-display text-[1.125rem] font-bold ${s.warn ? "text-amber-500" : "text-text"}`}>
+        <div
+          key={s.label}
+          className="border-r border-border px-5 py-4 last:border-r-0"
+        >
+          <p
+            className={`font-display text-[1.125rem] font-bold ${s.warn ? "text-amber-500" : "text-text"}`}
+          >
             <Counter target={animate ? s.value : 0} suffix={s.suffix} />
           </p>
           <p className="text-[0.625rem] text-text-muted">{s.label}</p>
@@ -248,7 +364,12 @@ function Counter({ target, suffix }: { target: number; suffix: string }) {
     requestAnimationFrame(tick);
   }, [target]);
 
-  return <>{val}{suffix}</>;
+  return (
+    <>
+      {val}
+      {suffix}
+    </>
+  );
 }
 
 // ── Main Interactive Map ──
@@ -273,16 +394,19 @@ export function InteractiveMap() {
 
         const storeIds = STORES.map((s) => s.id);
         storeIds.forEach((id, i) => {
-          setTimeout(() => {
-            setVisibleStores((prev) => new Set([...prev, id]));
-          }, 1000 + i * 180);
+          setTimeout(
+            () => {
+              setVisibleStores((prev) => new Set([...prev, id]));
+            },
+            1000 + i * 180,
+          );
         });
 
         setTimeout(() => setStatsAnimate(true), 7000);
         setTimeout(() => setAlertVisible(true), 8000);
         setTimeout(() => setAutoPlayDone(true), 9000);
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
 
     observer.observe(containerRef.current);
@@ -290,11 +414,14 @@ export function InteractiveMap() {
   }, []);
 
   const filteredStores = STORES.filter(
-    (s) => visibleStores.has(s.id) && s.score >= threshold
+    (s) => visibleStores.has(s.id) && s.score >= threshold,
   );
 
   return (
-    <div ref={containerRef} className="overflow-hidden rounded-2xl border border-border bg-bg shadow-[0_4px_24px_rgba(0,0,0,0.06)]">
+    <div
+      ref={containerRef}
+      className="overflow-hidden rounded-2xl border border-border bg-bg shadow-[0_4px_24px_rgba(0,0,0,0.06)]"
+    >
       <div className="flex flex-col lg:flex-row" style={{ minHeight: 520 }}>
         {/* Map — light tiles */}
         <div className="relative flex-1">
@@ -306,9 +433,8 @@ export function InteractiveMap() {
             zoomControl={false}
             attributionControl={false}
           >
-            <TileLayer
-              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-            />
+            <ScrollZoomControl />
+            <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
             {filteredStores.map((store) => (
               <CircleMarker
                 key={store.id}
@@ -338,7 +464,10 @@ export function InteractiveMap() {
         {/* Side panel */}
         <div className="w-full border-t border-border bg-bg p-5 lg:w-[320px] lg:border-l lg:border-t-0">
           {selectedStore ? (
-            <StorePanel store={selectedStore} onClose={() => setSelectedStore(null)} />
+            <StorePanel
+              store={selectedStore}
+              onClose={() => setSelectedStore(null)}
+            />
           ) : (
             <LiveFeed entries={LIVE_FEED} alertVisible={alertVisible} />
           )}
@@ -349,7 +478,9 @@ export function InteractiveMap() {
       {autoPlayDone && (
         <div className="flex flex-col gap-3 border-t border-border px-5 py-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
-            <label className="text-[0.6875rem] text-text-muted">Umbral de cumplimiento</label>
+            <label className="text-[0.6875rem] text-text-muted">
+              Umbral de cumplimiento
+            </label>
             <input
               type="range"
               min={0}
@@ -358,10 +489,15 @@ export function InteractiveMap() {
               onChange={(e) => setThreshold(Number(e.target.value))}
               className="h-1 w-32 cursor-pointer appearance-none rounded-full bg-bg-muted accent-brand"
             />
-            <span className="text-[0.6875rem] font-medium text-text-secondary">{threshold}</span>
+            <span className="text-[0.6875rem] font-medium text-text-secondary">
+              {threshold}
+            </span>
           </div>
           <p className="text-[0.6875rem] text-text-muted">
-            {filteredStores.length} tiendas visibles · {STORES.filter((s) => visibleStores.has(s.id)).length - filteredStores.length} ocultas
+            {filteredStores.length} tiendas visibles ·{" "}
+            {STORES.filter((s) => visibleStores.has(s.id)).length -
+              filteredStores.length}{" "}
+            ocultas
           </p>
         </div>
       )}
