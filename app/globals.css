@@ -28,7 +28,8 @@
   --font-body: 'Inter', sans-serif;
 }
 
-html { scroll-behavior: smooth; }
+/* Native scroll — no smooth behavior (causes lag on trackpads).
+   Smooth scrolling for anchor links is handled by JS instead. */
 
 body {
   background: var(--color-bg);

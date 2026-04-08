@@ -35,6 +35,12 @@ export function Nav() {
             <a
               key={link.href}
               href={link.href}
+              onClick={(e) => {
+                e.preventDefault();
+                document
+                  .querySelector(link.href)
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
               className="link-hover text-[0.8125rem] text-text-secondary transition-colors duration-300 hover:text-text"
             >
               {link.label}
