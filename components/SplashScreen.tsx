@@ -16,12 +16,11 @@ export function SplashScreen({ children }: { children: ReactNode }) {
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
-    const hasPlayed = sessionStorage.getItem(STORAGE_KEY) === "1";
     const prefersReduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    if (hasPlayed || prefersReduced) {
+    if (prefersReduced) {
       setSkipSplash(true);
       setIsReady(true);
       setIsComplete(true);
@@ -38,7 +37,6 @@ export function SplashScreen({ children }: { children: ReactNode }) {
       const circumference = 2 * Math.PI * 44;
       const tl = gsap.timeline({
         onComplete: () => {
-          sessionStorage.setItem(STORAGE_KEY, "1");
           document.body.style.overflow = "";
           setIsReady(true);
           setTimeout(() => setIsComplete(true), 50);
