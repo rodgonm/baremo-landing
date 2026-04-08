@@ -16,7 +16,7 @@
   /* Text */
   --color-text: #0C0C0C;
   --color-text-secondary: #555555;
-  --color-text-muted: #999999;
+  --color-text-muted: #737373;
   --color-text-faint: #D4D4D4;
 
   /* Borders */
@@ -81,6 +81,30 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Focus states */
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip to content */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 10000;
+  padding: 8px 16px;
+  background: var(--color-text);
+  color: var(--color-bg);
+  border-radius: 6px;
+  font-size: 0.875rem;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 16px;
 }
 
 ::selection { background: var(--color-brand-soft); color: var(--color-text); }

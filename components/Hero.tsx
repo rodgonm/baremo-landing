@@ -134,7 +134,6 @@ export function Hero() {
         <div className="hero-visual mt-8" style={{ opacity: 0 }}>
           <div
             style={{
-              maxHeight: 400,
               overflow: "hidden",
               borderRadius: 16,
               background: "#f2f2f0",
@@ -144,7 +143,7 @@ export function Hero() {
               ref={videoRef}
               muted
               playsInline
-              style={{ width: "100%", height: 400, objectFit: "cover" }}
+              style={{ width: "100%", objectFit: "cover" }}
             >
               <source src="/hero-video.mp4" type="video/mp4" />
             </video>

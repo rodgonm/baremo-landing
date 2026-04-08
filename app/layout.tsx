@@ -40,7 +40,12 @@ export default function RootLayout({
           <style>{`.splash-overlay{display:none}[data-splash-content]{opacity:1!important;visibility:visible!important}`}</style>
         </noscript>
       </head>
-      <body className="min-h-screen antialiased">{children}</body>
+      <body className="min-h-screen antialiased">
+        <a href="#plataforma" className="skip-link">
+          Ir al contenido
+        </a>
+        <main>{children}</main>
+      </body>
     </html>
   );
 }

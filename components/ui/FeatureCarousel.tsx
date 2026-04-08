@@ -1,14 +1,14 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import { gsap, useGSAP } from "@/lib/gsap-setup";
+import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap-setup";
 
 interface Step {
   id: string;
   label: string;
   title: string;
   description: string;
-  image?: string;
+  image: string;
 }
 
 const steps: Step[] = [
@@ -18,7 +18,7 @@ const steps: Step[] = [
     title: "Control de ejecución en punto de venta",
     description:
       "Auditorías digitales con puntaje automático por zona. Checklists con fotos, cumplimiento en tiempo real y resultados instantáneos para tu equipo en campo.",
-    image: "/images/ejecucion.png",
+    image: "/images/ejecucion.jpg",
   },
   {
     id: "distribucion",
@@ -26,7 +26,7 @@ const steps: Step[] = [
     title: "Cobertura y rutas optimizadas",
     description:
       "Frecuencia de visita, cobertura por territorio y rutas inteligentes. Asegura que tu equipo llegue a las tiendas correctas, en el momento correcto.",
-    image: "/images/distribucion.png",
+    image: "/images/distribucion.jpg",
   },
   {
     id: "precios",
@@ -34,8 +34,7 @@ const steps: Step[] = [
     title: "Precios competitivos y control de stock",
     description:
       "Captura de precios en campo con análisis competitivo automatizado. Alertas de quiebre de stock en tiempo real para no perder ventas.",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&auto=format&fit=crop",
   },
   {
     id: "iot",
@@ -43,7 +42,7 @@ const steps: Step[] = [
     title: "Telemetría y control de cadena de frío",
     description:
       "Monitoreo de temperatura, apertura de puertas y estado de equipos en frío. Datos de sensores en tiempo real integrados con el resto de tu operación.",
-    image: "/images/iot.png",
+    image: "/images/iot.jpg",
   },
 ];
 
@@ -57,7 +56,7 @@ export function FeatureCarousel() {
   const imageRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  // Auto-cycle (stops when user clicks a step)
+  // Auto-cycle — stops on click, restarts on scroll re-enter
   const resetTimer = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
     if (paused) return;
@@ -68,54 +67,44 @@ export function FeatureCarousel() {
 
   useEffect(() => {
     resetTimer();
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, [current, resetTimer]);
+
+  // Restart auto-cycle when user scrolls back to this section
+  useGSAP(() => {
+    if (!containerRef.current) return;
+    ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "top 80%",
+      onEnter: () => { setPaused(false); },
+      onEnterBack: () => { setPaused(false); setCurrent(0); },
+    });
+  }, { scope: containerRef });
 
   // GSAP animate on step change
   useGSAP(
     () => {
       if (!textRef.current || !imageRef.current) return;
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      const prefersReduced = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
-
-      // Text animation
       const textEls = textRef.current.querySelectorAll(".carousel-text");
       if (prefersReduced) {
         gsap.set(textEls, { opacity: 1, y: 0 });
       } else {
-        gsap.fromTo(
-          textEls,
-          { opacity: 0, y: 16 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            stagger: 0.08,
-            ease: "power3.out",
-          },
+        gsap.fromTo(textEls,
+          { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.45, stagger: 0.07, ease: "power3.out" },
         );
       }
 
-      // Image animation
       const img = imageRef.current.querySelector(".carousel-image");
       if (img) {
         if (prefersReduced) {
           gsap.set(img, { opacity: 1, scale: 1 });
         } else {
-          gsap.fromTo(
-            img,
-            { opacity: 0, scale: 0.95 },
-            {
-              opacity: 1,
-              scale: 1,
-              duration: 0.6,
-              ease: "power3.out",
-              delay: 0.1,
-            },
+          gsap.fromTo(img,
+            { opacity: 0, scale: 0.97 },
+            { opacity: 1, scale: 1, duration: 0.55, ease: "power3.out", delay: 0.08 },
           );
         }
       }
@@ -125,7 +114,7 @@ export function FeatureCarousel() {
 
   const handleStepClick = (idx: number) => {
     if (idx === current) return;
-    setPaused(true); // Stop auto-cycle permanently once user interacts
+    setPaused(true);
     setCurrent(idx);
   };
 
@@ -135,12 +124,9 @@ export function FeatureCarousel() {
     <div ref={containerRef} className="flex w-full flex-col gap-8">
       {/* Card */}
       <div className="overflow-hidden rounded-2xl border border-border bg-bg">
-        <div className="grid min-h-[400px] lg:grid-cols-[1fr_1fr]">
+        <div className="grid min-h-[380px] lg:grid-cols-[1fr_1.1fr]">
           {/* Left — text */}
-          <div
-            ref={textRef}
-            className="flex flex-col justify-center p-8 lg:p-10"
-          >
+          <div ref={textRef} className="flex flex-col justify-center p-8 lg:p-10">
             <p className="carousel-text font-display text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-brand">
               {step.label}
             </p>
@@ -153,15 +139,13 @@ export function FeatureCarousel() {
           </div>
 
           {/* Right — image */}
-          <div
-            ref={imageRef}
-            className="relative min-h-[250px] bg-bg-muted lg:min-h-0"
-          >
+          <div ref={imageRef} className="relative min-h-[240px] bg-bg-muted lg:min-h-0">
             <img
               key={step.id}
               src={step.image}
               alt={step.title}
               className="carousel-image h-full w-full object-cover"
+              loading="lazy"
             />
           </div>
         </div>
@@ -179,35 +163,19 @@ export function FeatureCarousel() {
                 type="button"
                 onClick={() => handleStepClick(idx)}
                 className={`flex cursor-pointer items-center gap-2 rounded-full px-4 py-2 text-[0.8125rem] font-medium transition-all duration-300 ${
-                  isActive
-                    ? "bg-text text-bg"
-                    : "bg-bg-muted text-text-secondary hover:bg-border"
+                  isActive ? "bg-text text-bg" : "bg-bg-muted text-text-secondary hover:bg-border"
                 }`}
               >
-                <span
-                  className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[0.625rem] font-semibold transition-all duration-300 ${
-                    isActive
-                      ? "bg-brand text-white"
-                      : isCompleted
-                        ? "bg-brand text-white"
-                        : "bg-border text-text-muted"
-                  }`}
-                >
+                <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[0.625rem] font-semibold transition-all duration-300 ${
+                  isActive ? "bg-brand text-white"
+                    : isCompleted ? "bg-brand text-white"
+                    : "bg-border text-text-muted"
+                }`}>
                   {isCompleted ? (
-                    <svg
-                      className="h-3 w-3"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={3}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
+                    <svg className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                  ) : (
-                    idx + 1
-                  )}
+                  ) : idx + 1}
                 </span>
                 <span className="hidden sm:inline">{s.label}</span>
               </button>
@@ -215,21 +183,6 @@ export function FeatureCarousel() {
           })}
         </div>
       </nav>
-
-      {/* Paused indicator */}
-      {paused && (
-        <div className="flex justify-center">
-          <button
-            onClick={() => {
-              setPaused(false);
-              setCurrent((current + 1) % steps.length);
-            }}
-            className="cursor-pointer text-[0.6875rem] text-text-muted transition-colors hover:text-text-secondary"
-          >
-            ▶ Reanudar auto-play
-          </button>
-        </div>
-      )}
     </div>
   );
 }
